@@ -6,7 +6,7 @@ package main
 import "fmt"
 
 func main() {
-	anagrams := findAnagrams("cbaebabacd", "c")
+	anagrams := findAnagrams("cbaebabacdjkl", "jkl")
 	fmt.Println(anagrams)
 }
 
