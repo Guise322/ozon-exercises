@@ -35,10 +35,10 @@ func (ln *ListNode) PrintNodes() {
 }
 
 func main() {
-	nodeCnt := 0
+	nodeCnt := 4
 	pLN := &ListNode{0, nil}
 	var nextNode *ListNode = pLN
-	for i := 0; i < nodeCnt; i++ {
+	for i := 0; i < nodeCnt-1; i++ {
 		if nextNode.Next == nil {
 			nextNode.Next = &ListNode{i + 1, nil}
 			nextNode = nextNode.Next
@@ -50,24 +50,18 @@ func main() {
 }
 
 func deleteMiddle(head *ListNode) *ListNode {
-	node := head
-	nodes := []*ListNode{}
-	var nodeCnt int
-	for node != nil {
-		nodes = append(nodes, node)
-		nodeCnt++
-		node = node.Next
-	}
-	if nodeCnt == 1 {
+	if head.Next == nil {
 		return nil
 	}
-	nodeCntBy2 := nodeCnt / 2
-	nodeForDlt := nodes[nodeCntBy2]
-	prevNode := nodes[nodeCntBy2-1]
-	if nodeForDlt.Next != nil {
-		prevNode.Next = nodeForDlt.Next
-	} else {
-		prevNode.Next = nil
+	cur, slow, fast := head, head, head
+	for fast.Next != nil {
+		cur = slow
+		slow = slow.Next
+		fast = fast.Next
+		if fast.Next != nil {
+			fast = fast.Next
+		}
 	}
+	cur.Next = slow.Next
 	return head
 }
