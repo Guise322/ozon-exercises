@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package email_proto;
 
-option go_package = "github.com/Guise322/ozon-exercises/email_bot/proto/email.proto";
+option go_package = "github.com/Guise322/ozon-exercises/email_bot/protos/email.proto";
 
 message EmailRequest {
     int64 id = 1;

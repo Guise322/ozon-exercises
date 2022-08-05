@@ -5,6 +5,7 @@ go 1.18
 require gopkg.in/yaml.v2 v2.4.0
 
 require (
+	github.com/eyazici90/go-mediator v0.0.0-20220525200543-03834e996bd2
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/mitchellh/go-ps v1.0.0
 	golang.org/x/net v0.0.0-20201021035429-f5854403a974 // indirect
