@@ -1,4 +1,4 @@
-package contracts
+package contract
 
 type EmailRequest struct {
 	Id int64

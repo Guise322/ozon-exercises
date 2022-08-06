@@ -1,4 +1,4 @@
-package contracts
+package contract
 
 type EmailCommand struct {
 }

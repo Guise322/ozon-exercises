@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net"
 
+	"github.com/Guise322/ozon-exercises/email_bot/email_service_pb"
 	"github.com/Guise322/ozon-exercises/email_bot/internal/app"
-	"github.com/Guise322/ozon-exercises/email_bot/internal/app/contracts"
-	"github.com/Guise322/ozon-exercises/email_service_pb"
+	"github.com/Guise322/ozon-exercises/email_bot/internal/app/contract"
 
 	"google.golang.org/grpc"
 )
@@ -28,12 +28,12 @@ func RunGRPCSrv(lis net.Listener) error {
 func (s *server) GetEmail(
 	ctx context.Context,
 	in *email_service_pb.EmailRequest) (*email_service_pb.EmailResponse, error) {
-	med := app.EmailMediator{Msg: contracts.EmailRequest{Id: in.Id}}
+	med := app.EmailMediator{Msg: contract.EmailRequest{Id: in.Id}}
 	res, err := med.Handle()
 	if err != nil {
 		return nil, err
 	}
-	reqRes, ok := res.(*contracts.EmailReqResult)
+	reqRes, ok := res.(*contract.EmailReqResult)
 	if !ok {
 		return nil, fmt.Errorf("wrong response format: %v", reqRes)
 	}
@@ -43,12 +43,12 @@ func (s *server) GetEmail(
 func (s *server) SubscribeToInbox(
 	ctx context.Context,
 	in *email_service_pb.SubscribeCom) (*email_service_pb.ComResponse, error) {
-	med := app.EmailMediator{Msg: contracts.EmailCommand{}}
+	med := app.EmailMediator{Msg: contract.EmailCommand{}}
 	res, err := med.Handle()
 	if err != nil {
 		return nil, err
 	}
-	reqRes, ok := res.(*contracts.EmailComResult)
+	reqRes, ok := res.(*contract.EmailComResult)
 	if !ok {
 		return nil, fmt.Errorf("wrong response format: %v", reqRes)
 	}

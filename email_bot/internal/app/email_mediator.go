@@ -3,8 +3,8 @@ package app
 import (
 	"errors"
 
-	"github.com/Guise322/ozon-exercises/email_bot/internal/app/contracts"
-	"github.com/Guise322/ozon-exercises/email_bot/internal/app/email_handlers"
+	"github.com/Guise322/ozon-exercises/email_bot/internal/app/contract"
+	"github.com/Guise322/ozon-exercises/email_bot/internal/app/email_handler"
 )
 
 type EmailMediator struct {
@@ -13,11 +13,11 @@ type EmailMediator struct {
 
 func (m *EmailMediator) Handle() (interface{}, error) {
 	switch o := m.Msg.(type) {
-	case contracts.EmailRequest:
-		h := &email_handlers.EmailReqHandler{Req: o}
+	case contract.EmailRequest:
+		h := &email_handler.EmailReqHandler{Req: o}
 		return h.Handle()
-	case contracts.EmailCommand:
-		h := email_handlers.EmailComHandler{}
+	case contract.EmailCommand:
+		h := email_handler.EmailComHandler{}
 		return h.Handle()
 	default:
 		return nil, errors.New("undefined msg")
