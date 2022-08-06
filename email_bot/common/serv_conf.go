@@ -1,4 +1,4 @@
-package config
+package common
 
 import (
 	"os"
@@ -6,10 +6,11 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type Config struct {
+type Serv_conf struct {
 	Server struct {
-		Host string `yaml:"host"`
-		Port string `yaml:"port"`
+		Host          string `yaml:"host"`
+		Port          int64  `yaml:"port"`
+		TimeoutInMils int64  `yaml:"timeoutInMils"`
 	} `yaml:"server"`
 }
 
@@ -18,7 +19,7 @@ const (
 	prodPath  string = "config/config.yml"
 )
 
-func ReadConfig() (*Config, error) {
+func ReadConfig() (*Serv_conf, error) {
 	var file *os.File
 	var err error
 	var p string
@@ -32,7 +33,7 @@ func ReadConfig() (*Config, error) {
 		return nil, err
 	}
 	defer file.Close()
-	var conf Config
+	var conf Serv_conf
 	confPtr := &conf
 	decoder := yaml.NewDecoder(file)
 	err = decoder.Decode(confPtr)

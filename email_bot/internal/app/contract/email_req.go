@@ -10,7 +10,3 @@ type EmailReqResult struct {
 	To   string
 	Text string
 }
-
-type EmailReqHandler interface {
-	Handle() *EmailReqResult
-}

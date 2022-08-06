@@ -5,7 +5,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/Guise322/ozon-exercises/email_bot/config"
+	"github.com/Guise322/ozon-exercises/email_bot/common"
 	"github.com/Guise322/ozon-exercises/email_bot/internal/api"
 )
 
@@ -14,7 +14,7 @@ func main() {
 }
 
 func runServer() error {
-	conf, err := config.ReadConfig()
+	conf, err := common.ReadConfig()
 	if err != nil {
 		return err
 	}
@@ -25,5 +25,5 @@ func runServer() error {
 	}
 	defer lis.Close()
 	log.Printf("the server listening at %v", lis.Addr())
-	return api.RunGRPCSrv(lis)
+	return api.RunGRPCSrv(conf.Server.TimeoutInMils, lis)
 }

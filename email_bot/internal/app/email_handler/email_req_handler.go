@@ -1,6 +1,8 @@
 package email_handler
 
 import (
+	"context"
+
 	"github.com/Guise322/ozon-exercises/email_bot/internal/app/contract"
 )
 
@@ -8,7 +10,7 @@ type EmailReqHandler struct {
 	Req contract.EmailRequest
 }
 
-func (h *EmailReqHandler) Handle() (*contract.EmailReqResult, error) {
+func (h *EmailReqHandler) Handle(ctx context.Context) (*contract.EmailReqResult, error) {
 	if h.Req.Id == 322 {
 		return &contract.EmailReqResult{
 			Id:   h.Req.Id,

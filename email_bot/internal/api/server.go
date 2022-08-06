@@ -16,8 +16,9 @@ type server struct {
 	email_service_pb.UnimplementedEmailServer
 }
 
-func RunGRPCSrv(lis net.Listener) error {
-	grpcServer := grpc.NewServer()
+func RunGRPCSrv(timeout int64, lis net.Listener) error {
+	interc := timeoutInterceptor{timeout: timeout}
+	grpcServer := grpc.NewServer(grpc.UnaryInterceptor(interc.SetTimeout))
 	email_service_pb.RegisterEmailServer(grpcServer, &server{})
 	if err := grpcServer.Serve(lis); err != nil {
 		return err
@@ -29,7 +30,7 @@ func (s *server) GetEmail(
 	ctx context.Context,
 	in *email_service_pb.EmailRequest) (*email_service_pb.EmailResponse, error) {
 	med := app.EmailMediator{Msg: contract.EmailRequest{Id: in.Id}}
-	res, err := med.Handle()
+	res, err := med.Handle(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +45,7 @@ func (s *server) SubscribeToInbox(
 	ctx context.Context,
 	in *email_service_pb.SubscribeCom) (*email_service_pb.ComResponse, error) {
 	med := app.EmailMediator{Msg: contract.EmailCommand{}}
-	res, err := med.Handle()
+	res, err := med.Handle(ctx)
 	if err != nil {
 		return nil, err
 	}
