@@ -7,16 +7,18 @@ import (
 	"github.com/Guise322/ozon-exercises/email_bot/internal/app/email_handlers"
 )
 
-type EmailMediator struct{}
+type EmailMediator struct {
+	Msg interface{}
+}
 
-func (EmailMediator) Handle(msg interface{}) (interface{}, error) {
-	switch o := msg.(type) {
+func (m *EmailMediator) Handle() (interface{}, error) {
+	switch o := m.Msg.(type) {
 	case contracts.EmailRequest:
-		var h contracts.EmailReqHandler
-		h = email_handlers.EmailReqHandler{}
-		return h.Handle(o), nil
+		h := &email_handlers.EmailReqHandler{Req: o}
+		return h.Handle()
 	case contracts.EmailCommand:
-		return nil, errors.New("command is undefined")
+		h := email_handlers.EmailComHandler{}
+		return h.Handle()
 	default:
 		return nil, errors.New("undefined msg")
 	}

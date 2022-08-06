@@ -24,7 +24,6 @@ func runServer() error {
 		return err
 	}
 	defer lis.Close()
-	grpcServer := api.NewServer()
 	log.Printf("the server listening at %v", lis.Addr())
-	return api.Start(grpcServer, lis)
+	return api.RunGRPCSrv(lis)
 }

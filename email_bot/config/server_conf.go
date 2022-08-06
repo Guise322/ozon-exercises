@@ -13,21 +13,28 @@ type Config struct {
 	} `yaml:"server"`
 }
 
+const (
+	debugPath string = "../config/config.yml"
+	prodPath  string = "config/config.yml"
+)
+
 func ReadConfig() (*Config, error) {
 	var file *os.File
 	var err error
+	var p string
 	if IsDebugging() {
-		file, err = os.Open("../config/config.yml")
+		p = debugPath
 	} else {
-		file, err = os.Open("email_bot/config/config.yml")
+		p = prodPath
 	}
+	file, err = os.Open(p)
 	if err != nil {
 		return nil, err
 	}
 	defer file.Close()
 	var conf Config
-	decoder := yaml.NewDecoder(file)
 	confPtr := &conf
+	decoder := yaml.NewDecoder(file)
 	err = decoder.Decode(confPtr)
 	if err != nil {
 		return nil, err

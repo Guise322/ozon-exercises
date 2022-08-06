@@ -4,7 +4,7 @@ type EmailRequest struct {
 	Id int64
 }
 
-type EmailResponse struct {
+type EmailReqResult struct {
 	Id   int64
 	From string
 	To   string
@@ -12,5 +12,5 @@ type EmailResponse struct {
 }
 
 type EmailReqHandler interface {
-	Handle(EmailRequest) EmailResponse
+	Handle() *EmailReqResult
 }

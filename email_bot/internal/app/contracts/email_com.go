@@ -1,9 +1,12 @@
 package contracts
 
 type EmailCommand struct {
-	Id int64
+}
+
+type EmailComResult struct {
+	Data string
 }
 
 type EmailComHandler interface {
-	Handle(EmailCommand) error
+	Handle() (*EmailComResult, error)
 }

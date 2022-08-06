@@ -2,7 +2,13 @@ syntax = "proto3";
 
 package email_proto;
 
-option go_package = "github.com/Guise322/ozon-exercises/email_bot/protos/email.proto";
+option go_package = "github.com/Guise322/ozon-exercises/email_bot/email_service_pb";
+
+message SubscribeCom {}
+
+message ComResponse {
+    string Result = 1;
+}
 
 message EmailRequest {
     int64 id = 1;
@@ -17,4 +23,5 @@ message EmailResponse {
 
 service Email {
     rpc GetEmail (EmailRequest) returns (EmailResponse);
+    rpc SubscribeToInbox (SubscribeCom) returns (ComResponse);
 }
