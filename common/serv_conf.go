@@ -15,7 +15,7 @@ type Serv_conf struct {
 }
 
 const (
-	debugPath string = "../config/config.yml"
+	debugPath string = "../../config/config.yml"
 	prodPath  string = "config/config.yml"
 )
 

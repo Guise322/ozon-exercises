@@ -5,7 +5,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/Guise322/ozon-exercises/email_service/common"
+	"github.com/Guise322/ozon-exercises/common"
 	"github.com/Guise322/ozon-exercises/email_service/internal/api"
 )
 
