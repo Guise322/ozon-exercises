@@ -5,8 +5,8 @@ import (
 	"log"
 	"net"
 
-	"github.com/Guise322/ozon-exercises/email_bot/common"
-	"github.com/Guise322/ozon-exercises/email_bot/internal/api"
+	"github.com/Guise322/ozon-exercises/email_service/common"
+	"github.com/Guise322/ozon-exercises/email_service/internal/api"
 )
 
 func main() {

@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/Guise322/ozon-exercises/email_bot/email_service_pb"
-	"github.com/Guise322/ozon-exercises/email_bot/internal/app"
-	"github.com/Guise322/ozon-exercises/email_bot/internal/app/contract"
+	"github.com/Guise322/ozon-exercises/email_service/email_service_pb"
+	"github.com/Guise322/ozon-exercises/email_service/internal/app"
+	"github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
 
 	"google.golang.org/grpc"
 )

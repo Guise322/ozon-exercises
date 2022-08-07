@@ -3,7 +3,7 @@ package email_handler
 import (
 	"context"
 
-	"github.com/Guise322/ozon-exercises/email_bot/internal/app/contract"
+	"github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
 )
 
 type EmailReqHandler struct {

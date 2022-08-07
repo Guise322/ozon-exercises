@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 
-	"github.com/Guise322/ozon-exercises/email_bot/internal/app/contract"
-	"github.com/Guise322/ozon-exercises/email_bot/internal/app/email_handler"
+	"github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
+	"github.com/Guise322/ozon-exercises/email_service/internal/app/email_handler"
 )
 
 type EmailMediator struct {

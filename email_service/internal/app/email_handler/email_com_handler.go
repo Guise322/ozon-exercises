@@ -5,7 +5,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/Guise322/ozon-exercises/email_bot/internal/app/contract"
+	"github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
 )
 
 type EmailComHandler struct{}

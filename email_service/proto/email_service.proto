@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package email_proto;
 
-option go_package = "github.com/Guise322/ozon-exercises/email_bot/email_service_pb";
+option go_package = "github.com/Guise322/ozon-exercises/email_service/email_service_pb";
 
 message SubscribeCom {}
 
