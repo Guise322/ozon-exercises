@@ -11,17 +11,27 @@ message ComResponse {
 }
 
 message EmailRequest {
-    int64 id = 1;
+    int64 Id = 1;
 }
 
 message EmailResponse {
-    int64 id = 1;
-    string from = 2;
-    string to = 3;
-    string text = 4;
+    int64 Id = 1;
+    string From = 2;
+    string To = 3;
+    string Text = 4;
 }
 
 service Email {
     rpc GetEmail (EmailRequest) returns (EmailResponse);
     rpc SubscribeToInbox (SubscribeCom) returns (ComResponse);
+}
+
+message NewEmailCom {
+    int64 Id = 1; 
+}
+
+message Empty {}
+
+service NewEmailNotif {
+    rpc Notify(NewEmailCom) returns (Empty);
 }

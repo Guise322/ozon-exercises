@@ -15,11 +15,11 @@ func (v IdValidInterceptor) ValidateId(
 	req interface{},
 	info *grpc.UnaryServerInfo,
 	handler grpc.UnaryHandler) (resp interface{}, err error) {
-	emailReq, ok := req.(*pb.EmailRequest)
+	emailCom, ok := req.(*pb.NewEmailCom)
 	if !ok {
 		return handler(ctx, req)
 	}
-	if emailReq.Id <= 0 {
+	if emailCom.Id <= 0 {
 		return nil, errors.New("id should be greater than 0")
 	}
 	return handler(ctx, req)

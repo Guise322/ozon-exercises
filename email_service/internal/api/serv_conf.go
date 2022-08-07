@@ -1,4 +1,4 @@
-package common
+package api
 
 import (
 	"os"
@@ -14,21 +14,10 @@ type Serv_conf struct {
 	} `yaml:"server"`
 }
 
-const (
-	debugPath string = "../../config/config.yml"
-	prodPath  string = "config/config.yml"
-)
-
-func ReadConfig() (*Serv_conf, error) {
+func ReadConfig(path string) (*Serv_conf, error) {
 	var file *os.File
 	var err error
-	var p string
-	if IsDebugging() {
-		p = debugPath
-	} else {
-		p = prodPath
-	}
-	file, err = os.Open(p)
+	file, err = os.Open(path)
 	if err != nil {
 		return nil, err
 	}

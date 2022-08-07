@@ -9,12 +9,23 @@ import (
 	"github.com/Guise322/ozon-exercises/email_service/internal/api"
 )
 
+const (
+	debugPath string = "../config/config.yml"
+	prodPath  string = "email_service/config/config.yml"
+)
+
 func main() {
-	log.Fatalf("%v", runServer())
+	log.Fatal(runServer())
 }
 
 func runServer() error {
-	conf, err := common.ReadConfig()
+	var p string
+	if common.IsDebugging() {
+		p = debugPath
+	} else {
+		p = prodPath
+	}
+	conf, err := api.ReadConfig(p)
 	if err != nil {
 		return err
 	}
