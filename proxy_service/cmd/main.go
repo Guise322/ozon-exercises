@@ -6,7 +6,8 @@ import (
 	"net"
 
 	"github.com/Guise322/ozon-exercises/common"
-	"github.com/Guise322/ozon-exercises/proxy_service/internal/api"
+	grpcSrv "github.com/Guise322/ozon-exercises/proxy_service/internal/api/grpc"
+	httpSrv "github.com/Guise322/ozon-exercises/proxy_service/internal/api/http"
 )
 
 const (
@@ -15,7 +16,8 @@ const (
 )
 
 func main() {
-	log.Fatal(runServer())
+	go func() { log.Print(runGRPCServer()) }()
+	log.Fatal(runHTTPServer())
 	// conn, err := grpc.Dial(
 	// 	fmt.Sprintf("%v:%v", conf.Server.Host, conf.Server.Port),
 	// 	grpc.WithTransportCredentials(insecure.NewCredentials()),
@@ -29,14 +31,14 @@ func main() {
 	// fmt.Printf("the response: %v", resp.Result)
 }
 
-func runServer() error {
+func runGRPCServer() error {
 	var p string
 	if common.IsDebugging() {
 		p = debugPath
 	} else {
 		p = prodPath
 	}
-	conf, err := api.ReadConfig(p)
+	conf, err := grpcSrv.ReadConfig(p)
 	if err != nil {
 		return err
 	}
@@ -46,6 +48,20 @@ func runServer() error {
 		return err
 	}
 	defer lis.Close()
-	log.Printf("the proxy server listening at %v", lis.Addr())
-	return api.RunGRPCSrv(lis)
+	return grpcSrv.RunGRPCSrv(lis)
+}
+
+func runHTTPServer() error {
+	var p string
+	if common.IsDebugging() {
+		p = debugPath
+	} else {
+		p = prodPath
+	}
+	srv := httpSrv.NewHTTPSrv()
+	conf, err := httpSrv.ReadConfig(p)
+	if err != nil {
+		return err
+	}
+	return srv.RunHTTPSrv(conf)
 }
