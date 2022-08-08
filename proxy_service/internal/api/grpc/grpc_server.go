@@ -1,7 +1,6 @@
 package grpc
 
 import (
-	"context"
 	"net"
 
 	pb "github.com/Guise322/ozon-exercises/common/email_service_pb"
@@ -23,8 +22,4 @@ func RunGRPCSrv(lis net.Listener) error {
 		return err
 	}
 	return nil
-}
-
-func (s *server) Notify(ctx context.Context, in *pb.NewEmailCom) (*pb.Empty, error) {
-	return &pb.Empty{}, nil
 }
