@@ -1,4 +1,4 @@
-package grpc
+package grpc_server
 
 import (
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/middleware"

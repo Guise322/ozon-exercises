@@ -6,8 +6,8 @@ import (
 	"net"
 
 	"github.com/Guise322/ozon-exercises/common"
-	grpcSrv "github.com/Guise322/ozon-exercises/proxy_service/internal/api/grpc"
-	httpSrv "github.com/Guise322/ozon-exercises/proxy_service/internal/api/http"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/grpc_server"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/http_server"
 )
 
 const (
@@ -31,14 +31,17 @@ func main() {
 	// fmt.Printf("the response: %v", resp.Result)
 }
 
-func runGRPCServer() error {
-	var p string
+func getConfPath() string {
 	if common.IsDebugging() {
-		p = debugPath
+		return debugPath
 	} else {
-		p = prodPath
+		return prodPath
 	}
-	conf, err := grpcSrv.ReadConfig(p)
+}
+
+func runGRPCServer() error {
+	path := getConfPath()
+	conf, err := grpc_server.ReadConfig(path)
 	if err != nil {
 		return err
 	}
@@ -48,18 +51,13 @@ func runGRPCServer() error {
 		return err
 	}
 	defer lis.Close()
-	return grpcSrv.RunGRPCSrv(lis)
+	return grpc_server.RunGRPCSrv(lis)
 }
 
 func runHTTPServer() error {
-	var p string
-	if common.IsDebugging() {
-		p = debugPath
-	} else {
-		p = prodPath
-	}
-	srv := httpSrv.NewHTTPSrv()
-	conf, err := httpSrv.ReadConfig(p)
+	path := getConfPath()
+	srv := http_server.NewHTTPSrv()
+	conf, err := http_server.ReadConfig(path)
 	if err != nil {
 		return err
 	}

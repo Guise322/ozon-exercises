@@ -1,16 +1,16 @@
-package grpc
+package http_server
 
 import "github.com/Guise322/ozon-exercises/proxy_service/internal/api"
 
-type GRPCConf struct {
+type httpConf struct {
 	Server struct {
 		Host string `yaml:"host"`
 		Port int64  `yaml:"port"`
-	} `yaml:"grpcServer"`
+	} `yaml:"httpServer"`
 }
 
-func ReadConfig(path string) (*GRPCConf, error) {
-	var conf GRPCConf
+func ReadConfig(path string) (*httpConf, error) {
+	var conf httpConf
 	confPtr := &conf
 	err := api.ReadConfig(confPtr, path)
 	if err != nil {
