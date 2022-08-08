@@ -3,6 +3,8 @@ package http
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/app"
 )
 
 type HTTPServer struct {
@@ -10,7 +12,9 @@ type HTTPServer struct {
 }
 
 func NewHTTPSrv() *HTTPServer {
-	return &HTTPServer{cmdController: cmdController{}}
+	return &HTTPServer{
+		cmdController: cmdController{mediator: app.ProxyMediator{}},
+	}
 }
 
 func (srv *HTTPServer) RunHTTPSrv(conf *httpConf) error {
