@@ -8,6 +8,7 @@ import (
 	"github.com/Guise322/ozon-exercises/common"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/grpc_server"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/http_server"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/app"
 )
 
 const (
@@ -56,7 +57,7 @@ func runGRPCServer() error {
 
 func runHTTPServer() error {
 	path := getConfPath()
-	srv := http_server.NewHTTPSrv()
+	srv := http_server.HTTPServer{Mediator: app.ProxyMediator{}}
 	conf, err := http_server.ReadConfig(path)
 	if err != nil {
 		return err
