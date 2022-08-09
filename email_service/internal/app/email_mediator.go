@@ -10,13 +10,12 @@ import (
 )
 
 type EmailMediator struct {
-	Msg interface{}
 }
 
-func (m *EmailMediator) Handle(ctx context.Context) (interface{}, error) {
-	switch o := m.Msg.(type) {
+func (EmailMediator) Handle(ctx context.Context, msg interface{}) (interface{}, error) {
+	switch o := msg.(type) {
 	case contract.EmailRequest:
-		h := &req_handler.EmailReqHandler{Req: o}
+		h := req_handler.EmailReqHandler{Req: o}
 		return h.Handle(ctx)
 	case contract.EmailCommand:
 		h := cmd_handler.EmailCmdHandler{}

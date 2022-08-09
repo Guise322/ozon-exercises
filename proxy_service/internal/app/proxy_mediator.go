@@ -10,12 +10,15 @@ import (
 
 type ProxyMediator struct{}
 
-func (ProxyMediator) Handle(msg interface{}, ctx context.Context) (interface{}, error) {
+func (ProxyMediator) Handle(ctx context.Context, msg interface{}) (interface{}, error) {
 	switch s := msg.(type) {
 	case contract.ProxySubCmd:
-		h := &cmd_handler.ProxyCmdHandler{}
+		h := cmd_handler.SubCmdHandler{}
+		return nil, h.Handle(ctx, s)
+	case contract.NotifCmd:
+		h := cmd_handler.NotifCmdHandler{}
 		h.Handle(ctx, s)
-		return nil, nil
+		return nil, h.Handle(ctx, s)
 	default:
 		return nil, errors.New("undefined msg")
 	}

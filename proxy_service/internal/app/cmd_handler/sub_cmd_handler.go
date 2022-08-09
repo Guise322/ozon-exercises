@@ -7,9 +7,10 @@ import (
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
 )
 
-type ProxyCmdHandler struct{}
+type SubCmdHandler struct{}
 
-func (ProxyCmdHandler) Handle(ctx context.Context, cmd contract.ProxySubCmd) {
+func (SubCmdHandler) Handle(ctx context.Context, cmd contract.ProxySubCmd) error {
 	tiker := time.NewTicker(2000 * time.Millisecond)
 	<-tiker.C
+	return nil
 }

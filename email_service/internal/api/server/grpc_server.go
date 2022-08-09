@@ -11,13 +11,13 @@ import (
 
 type server struct {
 	pb.UnimplementedEmailServer
+	mediator app.EmailMediator
 }
 
 func (s *server) GetEmail(
 	ctx context.Context,
 	in *pb.EmailRequest) (*pb.EmailResponse, error) {
-	med := app.EmailMediator{Msg: contract.EmailRequest{Id: in.Id}}
-	res, err := med.Handle(ctx)
+	res, err := s.mediator.Handle(ctx, contract.EmailRequest{Id: in.Id})
 	if err != nil {
 		return nil, err
 	}
@@ -31,8 +31,7 @@ func (s *server) GetEmail(
 func (s *server) SubscribeToInbox(
 	ctx context.Context,
 	in *pb.SubscribeCom) (*pb.ComResponse, error) {
-	med := app.EmailMediator{Msg: contract.EmailCommand{}}
-	res, err := med.Handle(ctx)
+	res, err := s.mediator.Handle(ctx, contract.EmailCommand{})
 	if err != nil {
 		return nil, err
 	}

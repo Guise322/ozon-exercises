@@ -17,5 +17,5 @@ func (srv HTTPServer) subscribeToInbox(w http.ResponseWriter, r *http.Request) {
 	}
 	login := r.URL.Query().Get("login")
 	pass := r.URL.Query().Get("password")
-	srv.Mediator.Handle(contract.ProxySubCmd{Login: login, Pass: pass}, r.Context())
+	srv.Mediator.Handle(r.Context(), contract.ProxySubCmd{Login: login, Pass: pass})
 }
