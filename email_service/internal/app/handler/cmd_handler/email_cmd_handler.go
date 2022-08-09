@@ -8,9 +8,9 @@ import (
 	"github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
 )
 
-type EmailComHandler struct{}
+type EmailCmdHandler struct{}
 
-func (EmailComHandler) Handle(ctx context.Context) (*contract.EmailComResult, error) {
+func (EmailCmdHandler) Handle(ctx context.Context) (*contract.EmailCmdResult, error) {
 	ticker := time.NewTicker(5 * time.Millisecond)
 	defer ticker.Stop()
 
@@ -19,5 +19,5 @@ func (EmailComHandler) Handle(ctx context.Context) (*contract.EmailComResult, er
 	case <-ctx.Done():
 		return nil, errors.New("timeout")
 	}
-	return &contract.EmailComResult{Data: "Hello there!"}, nil
+	return &contract.EmailCmdResult{Data: "Hello there!"}, nil
 }

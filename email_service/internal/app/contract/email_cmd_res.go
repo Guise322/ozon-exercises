@@ -1,5 +1,5 @@
 package contract
 
-type EmailComResult struct {
+type EmailCmdResult struct {
 	Data string
 }

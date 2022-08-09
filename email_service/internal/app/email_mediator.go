@@ -19,7 +19,7 @@ func (m *EmailMediator) Handle(ctx context.Context) (interface{}, error) {
 		h := &req_handler.EmailReqHandler{Req: o}
 		return h.Handle(ctx)
 	case contract.EmailCommand:
-		h := cmd_handler.EmailComHandler{}
+		h := cmd_handler.EmailCmdHandler{}
 		return h.Handle(ctx)
 	default:
 		return nil, errors.New("undefined msg")

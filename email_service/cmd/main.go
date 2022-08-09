@@ -6,7 +6,7 @@ import (
 	"net"
 
 	"github.com/Guise322/ozon-exercises/common"
-	"github.com/Guise322/ozon-exercises/email_service/internal/api"
+	"github.com/Guise322/ozon-exercises/email_service/internal/api/server"
 )
 
 const (
@@ -19,13 +19,8 @@ func main() {
 }
 
 func runServer() error {
-	var p string
-	if common.IsDebugging() {
-		p = debugPath
-	} else {
-		p = prodPath
-	}
-	conf, err := api.ReadConfig(p)
+	path := getPath()
+	conf, err := server.ReadConfig(path)
 	if err != nil {
 		return err
 	}
@@ -36,5 +31,12 @@ func runServer() error {
 	}
 	defer lis.Close()
 	log.Printf("the server listening at %v", lis.Addr())
-	return api.RunGRPCSrv(conf.Server.TimeoutInMils, lis)
+	return server.RunGRPCSrv(conf.Server.TimeoutInMils, lis)
+}
+
+func getPath() string {
+	if common.IsDebugging() {
+		return debugPath
+	}
+	return prodPath
 }

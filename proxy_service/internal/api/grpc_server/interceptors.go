@@ -6,6 +6,6 @@ import (
 )
 
 func UseInterceptors(opts *[]grpc.ServerOption) {
-	id_valid_interc := middleware.IdValidInterceptor{}
-	*opts = append(*opts, grpc.UnaryInterceptor(id_valid_interc.ValidateId))
+	idIalidInterc := middleware.IdValidInterceptor{}
+	*opts = append(*opts, grpc.UnaryInterceptor(idIalidInterc.ValidateId))
 }
