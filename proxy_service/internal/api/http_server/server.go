@@ -8,12 +8,12 @@ import (
 )
 
 type HTTPServer struct {
-	cmdController cmdController
+	cmdController httpController
 }
 
 func NewHTTPSrv() *HTTPServer {
 	return &HTTPServer{
-		cmdController: cmdController{mediator: app.ProxyMediator{}},
+		cmdController: httpController{mediator: app.ProxyMediator{}},
 	}
 }
 

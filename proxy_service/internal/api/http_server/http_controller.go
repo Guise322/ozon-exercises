@@ -7,11 +7,11 @@ import (
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
 )
 
-type cmdController struct {
+type httpController struct {
 	mediator app.ProxyMediator
 }
 
-func (c cmdController) subscribeToInbox(w http.ResponseWriter, r *http.Request) {
+func (c httpController) subscribeToInbox(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		w.WriteHeader(http.StatusNotImplemented)
 	}
