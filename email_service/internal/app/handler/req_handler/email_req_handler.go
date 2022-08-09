@@ -1,4 +1,4 @@
-package email_handler
+package req_handler
 
 import (
 	"context"

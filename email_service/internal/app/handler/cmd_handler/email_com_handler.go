@@ -1,4 +1,4 @@
-package email_handler
+package cmd_handler
 
 import (
 	"context"
