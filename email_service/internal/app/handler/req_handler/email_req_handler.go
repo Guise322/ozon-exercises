@@ -6,14 +6,12 @@ import (
 	"github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
 )
 
-type EmailReqHandler struct {
-	Req contract.EmailRequest
-}
+type EmailReqHandler struct{}
 
-func (h *EmailReqHandler) Handle(ctx context.Context) (*contract.EmailReqResult, error) {
-	if h.Req.Id == 322 {
+func (h *EmailReqHandler) Handle(ctx context.Context, req contract.EmailRequest) (*contract.EmailReqResult, error) {
+	if req.Id == 322 {
 		return &contract.EmailReqResult{
-			Id:   h.Req.Id,
+			Id:   req.Id,
 			From: "test@mail.com",
 			To:   "user@mail.com",
 			Text: "Hello there!"}, nil

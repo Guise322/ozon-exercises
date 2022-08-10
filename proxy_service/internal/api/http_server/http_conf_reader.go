@@ -2,8 +2,8 @@ package http_server
 
 import "github.com/Guise322/ozon-exercises/proxy_service/internal/api"
 
-func ReadConfig(path string) (*httpConf, error) {
-	var conf httpConf
+func readConfig(path string) (*HTTPConf, error) {
+	var conf HTTPConf
 	confPtr := &conf
 	err := api.ReadConfig(confPtr, path)
 	if err != nil {

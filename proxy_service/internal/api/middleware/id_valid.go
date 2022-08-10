@@ -10,7 +10,7 @@ import (
 
 type IdValidInterceptor struct{}
 
-func (v IdValidInterceptor) ValidateId(
+func (IdValidInterceptor) ValidateId(
 	ctx context.Context,
 	req interface{},
 	info *grpc.UnaryServerInfo,

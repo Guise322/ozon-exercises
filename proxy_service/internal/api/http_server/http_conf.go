@@ -1,6 +1,6 @@
 package http_server
 
-type httpConf struct {
+type HTTPConf struct {
 	Server struct {
 		Host string `yaml:"host"`
 		Port int64  `yaml:"port"`

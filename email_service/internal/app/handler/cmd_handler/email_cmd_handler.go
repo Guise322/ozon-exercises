@@ -10,7 +10,7 @@ import (
 
 type EmailCmdHandler struct{}
 
-func (EmailCmdHandler) Handle(ctx context.Context) (*contract.EmailCmdResult, error) {
+func (EmailCmdHandler) Handle(ctx context.Context, cmd contract.EmailCommand) (*contract.EmailCmdResult, error) {
 	ticker := time.NewTicker(5 * time.Millisecond)
 	defer ticker.Stop()
 

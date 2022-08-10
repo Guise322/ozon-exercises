@@ -7,9 +7,7 @@ import (
 )
 
 func ReadConfig(stPtr interface{}, path string) error {
-	var file *os.File
-	var err error
-	file, err = os.Open(path)
+	file, err := os.Open(path)
 	if err != nil {
 		return err
 	}

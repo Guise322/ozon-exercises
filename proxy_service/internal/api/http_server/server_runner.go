@@ -5,10 +5,15 @@ import (
 	"net/http"
 )
 
-func (srv *HTTPServer) RunHTTPSrv(conf *httpConf) error {
+func RunHTTPSrv(confPath string) error {
+	httpServ := newHTTPServer()
+	conf, err := readConfig(confPath)
+	if err != nil {
+		return err
+	}
 	address := fmt.Sprintf("%v:%v", conf.Server.Host, conf.Server.Port)
-	srv.UseRoutes()
-	err := http.ListenAndServe(address, nil)
+	httpServ.UseRoutes()
+	err = http.ListenAndServe(address, nil)
 	if err != nil {
 		return err
 	}

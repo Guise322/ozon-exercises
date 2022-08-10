@@ -5,7 +5,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-func UseInterceptors(opts *[]grpc.ServerOption) {
+func useInterceptors(opts *[]grpc.ServerOption) {
 	idIalidInterc := middleware.IdValidInterceptor{}
 	*opts = append(*opts, grpc.UnaryInterceptor(idIalidInterc.ValidateId))
 }

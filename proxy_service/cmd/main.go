@@ -1,14 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"net"
 
 	"github.com/Guise322/ozon-exercises/common"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/grpc_server"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/http_server"
-	"github.com/Guise322/ozon-exercises/proxy_service/internal/app"
 )
 
 const (
@@ -42,25 +39,10 @@ func getConfPath() string {
 
 func runGRPCServer() error {
 	path := getConfPath()
-	conf, err := grpc_server.ReadConfig(path)
-	if err != nil {
-		return err
-	}
-	address := fmt.Sprintf("%v:%v", conf.Server.Host, conf.Server.Port)
-	lis, err := net.Listen("tcp", address)
-	if err != nil {
-		return err
-	}
-	defer lis.Close()
-	return grpc_server.RunGRPCSrv(lis)
+	return grpc_server.RunGRPCSrv(path)
 }
 
 func runHTTPServer() error {
 	path := getConfPath()
-	srv := http_server.HTTPServer{Mediator: app.ProxyMediator{}}
-	conf, err := http_server.ReadConfig(path)
-	if err != nil {
-		return err
-	}
-	return srv.RunHTTPSrv(conf)
+	return http_server.RunHTTPSrv(path)
 }

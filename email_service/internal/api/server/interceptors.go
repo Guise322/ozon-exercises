@@ -5,7 +5,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-func UseInterceptors(opts *[]grpc.ServerOption, timeout int64) {
+func useInterceptors(opts *[]grpc.ServerOption, timeout int64) {
 	idIalidInterc := middleware.IdValidInterceptor{}
 	timeoutInterc := middleware.TimeoutInterceptor{Timeout: timeout}
 	*opts = append(*opts, grpc.ChainUnaryInterceptor(idIalidInterc.ValidateId, timeoutInterc.SetTimeout))
