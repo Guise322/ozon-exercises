@@ -9,9 +9,9 @@ import (
 
 func (m emailMediator) Handle(ctx context.Context, msg interface{}) (interface{}, error) {
 	switch mes := msg.(type) {
-	case contract.EmailRequest:
+	case contract.UnreadCountRequest:
 		return m.reqHandler.Handle(ctx, mes)
-	case contract.EmailCommand:
+	case contract.SubscribtionCmd:
 		return m.cmdHandler.Handle(ctx, mes)
 	default:
 		return nil, errors.New("undefined msg")

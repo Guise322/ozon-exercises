@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net"
 
-	pb "github.com/Guise322/ozon-exercises/common/email_service_pb"
+	pb "github.com/Guise322/ozon-exercises/common/email_service_pb/common/proto"
 	"google.golang.org/grpc"
 )
 
@@ -22,7 +22,7 @@ func RunGRPCSrv(path string) error {
 	var opts []grpc.ServerOption
 	useInterceptors(&opts, conf.Server.TimeoutInMils)
 	grpcServer := grpc.NewServer(opts...)
-	pb.RegisterEmailServer(grpcServer, newGRPCServer())
+	pb.RegisterUnreadEmailCountServer(grpcServer, newGRPCServer())
 	if err := grpcServer.Serve(lis); err != nil {
 		return err
 	}

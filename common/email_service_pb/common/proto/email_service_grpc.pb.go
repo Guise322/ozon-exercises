@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -18,122 +19,122 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// EmailClient is the client API for Email service.
+// UnreadEmailCountClient is the client API for UnreadEmailCount service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type EmailClient interface {
-	GetEmail(ctx context.Context, in *EmailRequest, opts ...grpc.CallOption) (*EmailResponse, error)
-	SubscribeToInbox(ctx context.Context, in *SubscribeCom, opts ...grpc.CallOption) (*ComResponse, error)
+type UnreadEmailCountClient interface {
+	GetUnreadEmailCount(ctx context.Context, in *UnreadCountRequest, opts ...grpc.CallOption) (*UnreadCountResponse, error)
+	SubscribeToInbox(ctx context.Context, in *SubscribtionCmd, opts ...grpc.CallOption) (*SubCmdResponse, error)
 }
 
-type emailClient struct {
+type unreadEmailCountClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewEmailClient(cc grpc.ClientConnInterface) EmailClient {
-	return &emailClient{cc}
+func NewUnreadEmailCountClient(cc grpc.ClientConnInterface) UnreadEmailCountClient {
+	return &unreadEmailCountClient{cc}
 }
 
-func (c *emailClient) GetEmail(ctx context.Context, in *EmailRequest, opts ...grpc.CallOption) (*EmailResponse, error) {
-	out := new(EmailResponse)
-	err := c.cc.Invoke(ctx, "/email_proto.Email/GetEmail", in, out, opts...)
+func (c *unreadEmailCountClient) GetUnreadEmailCount(ctx context.Context, in *UnreadCountRequest, opts ...grpc.CallOption) (*UnreadCountResponse, error) {
+	out := new(UnreadCountResponse)
+	err := c.cc.Invoke(ctx, "/email_proto.UnreadEmailCount/GetUnreadEmailCount", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *emailClient) SubscribeToInbox(ctx context.Context, in *SubscribeCom, opts ...grpc.CallOption) (*ComResponse, error) {
-	out := new(ComResponse)
-	err := c.cc.Invoke(ctx, "/email_proto.Email/SubscribeToInbox", in, out, opts...)
+func (c *unreadEmailCountClient) SubscribeToInbox(ctx context.Context, in *SubscribtionCmd, opts ...grpc.CallOption) (*SubCmdResponse, error) {
+	out := new(SubCmdResponse)
+	err := c.cc.Invoke(ctx, "/email_proto.UnreadEmailCount/SubscribeToInbox", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// EmailServer is the server API for Email service.
-// All implementations must embed UnimplementedEmailServer
+// UnreadEmailCountServer is the server API for UnreadEmailCount service.
+// All implementations must embed UnimplementedUnreadEmailCountServer
 // for forward compatibility
-type EmailServer interface {
-	GetEmail(context.Context, *EmailRequest) (*EmailResponse, error)
-	SubscribeToInbox(context.Context, *SubscribeCom) (*ComResponse, error)
-	mustEmbedUnimplementedEmailServer()
+type UnreadEmailCountServer interface {
+	GetUnreadEmailCount(context.Context, *UnreadCountRequest) (*UnreadCountResponse, error)
+	SubscribeToInbox(context.Context, *SubscribtionCmd) (*SubCmdResponse, error)
+	mustEmbedUnimplementedUnreadEmailCountServer()
 }
 
-// UnimplementedEmailServer must be embedded to have forward compatible implementations.
-type UnimplementedEmailServer struct {
+// UnimplementedUnreadEmailCountServer must be embedded to have forward compatible implementations.
+type UnimplementedUnreadEmailCountServer struct {
 }
 
-func (UnimplementedEmailServer) GetEmail(context.Context, *EmailRequest) (*EmailResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetEmail not implemented")
+func (UnimplementedUnreadEmailCountServer) GetUnreadEmailCount(context.Context, *UnreadCountRequest) (*UnreadCountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUnreadEmailCount not implemented")
 }
-func (UnimplementedEmailServer) SubscribeToInbox(context.Context, *SubscribeCom) (*ComResponse, error) {
+func (UnimplementedUnreadEmailCountServer) SubscribeToInbox(context.Context, *SubscribtionCmd) (*SubCmdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SubscribeToInbox not implemented")
 }
-func (UnimplementedEmailServer) mustEmbedUnimplementedEmailServer() {}
+func (UnimplementedUnreadEmailCountServer) mustEmbedUnimplementedUnreadEmailCountServer() {}
 
-// UnsafeEmailServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to EmailServer will
+// UnsafeUnreadEmailCountServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UnreadEmailCountServer will
 // result in compilation errors.
-type UnsafeEmailServer interface {
-	mustEmbedUnimplementedEmailServer()
+type UnsafeUnreadEmailCountServer interface {
+	mustEmbedUnimplementedUnreadEmailCountServer()
 }
 
-func RegisterEmailServer(s grpc.ServiceRegistrar, srv EmailServer) {
-	s.RegisterService(&Email_ServiceDesc, srv)
+func RegisterUnreadEmailCountServer(s grpc.ServiceRegistrar, srv UnreadEmailCountServer) {
+	s.RegisterService(&UnreadEmailCount_ServiceDesc, srv)
 }
 
-func _Email_GetEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EmailRequest)
+func _UnreadEmailCount_GetUnreadEmailCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnreadCountRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EmailServer).GetEmail(ctx, in)
+		return srv.(UnreadEmailCountServer).GetUnreadEmailCount(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/email_proto.Email/GetEmail",
+		FullMethod: "/email_proto.UnreadEmailCount/GetUnreadEmailCount",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EmailServer).GetEmail(ctx, req.(*EmailRequest))
+		return srv.(UnreadEmailCountServer).GetUnreadEmailCount(ctx, req.(*UnreadCountRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Email_SubscribeToInbox_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SubscribeCom)
+func _UnreadEmailCount_SubscribeToInbox_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubscribtionCmd)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EmailServer).SubscribeToInbox(ctx, in)
+		return srv.(UnreadEmailCountServer).SubscribeToInbox(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/email_proto.Email/SubscribeToInbox",
+		FullMethod: "/email_proto.UnreadEmailCount/SubscribeToInbox",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EmailServer).SubscribeToInbox(ctx, req.(*SubscribeCom))
+		return srv.(UnreadEmailCountServer).SubscribeToInbox(ctx, req.(*SubscribtionCmd))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Email_ServiceDesc is the grpc.ServiceDesc for Email service.
+// UnreadEmailCount_ServiceDesc is the grpc.ServiceDesc for UnreadEmailCount service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Email_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "email_proto.Email",
-	HandlerType: (*EmailServer)(nil),
+var UnreadEmailCount_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "email_proto.UnreadEmailCount",
+	HandlerType: (*UnreadEmailCountServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetEmail",
-			Handler:    _Email_GetEmail_Handler,
+			MethodName: "GetUnreadEmailCount",
+			Handler:    _UnreadEmailCount_GetUnreadEmailCount_Handler,
 		},
 		{
 			MethodName: "SubscribeToInbox",
-			Handler:    _Email_SubscribeToInbox_Handler,
+			Handler:    _UnreadEmailCount_SubscribeToInbox_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -144,7 +145,7 @@ var Email_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NewEmailNotifClient interface {
-	Notify(ctx context.Context, in *NewEmailCom, opts ...grpc.CallOption) (*Empty, error)
+	Notify(ctx context.Context, in *NewEmailCmd, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type newEmailNotifClient struct {
@@ -155,8 +156,8 @@ func NewNewEmailNotifClient(cc grpc.ClientConnInterface) NewEmailNotifClient {
 	return &newEmailNotifClient{cc}
 }
 
-func (c *newEmailNotifClient) Notify(ctx context.Context, in *NewEmailCom, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
+func (c *newEmailNotifClient) Notify(ctx context.Context, in *NewEmailCmd, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/email_proto.NewEmailNotif/Notify", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -168,7 +169,7 @@ func (c *newEmailNotifClient) Notify(ctx context.Context, in *NewEmailCom, opts 
 // All implementations must embed UnimplementedNewEmailNotifServer
 // for forward compatibility
 type NewEmailNotifServer interface {
-	Notify(context.Context, *NewEmailCom) (*Empty, error)
+	Notify(context.Context, *NewEmailCmd) (*emptypb.Empty, error)
 	mustEmbedUnimplementedNewEmailNotifServer()
 }
 
@@ -176,7 +177,7 @@ type NewEmailNotifServer interface {
 type UnimplementedNewEmailNotifServer struct {
 }
 
-func (UnimplementedNewEmailNotifServer) Notify(context.Context, *NewEmailCom) (*Empty, error) {
+func (UnimplementedNewEmailNotifServer) Notify(context.Context, *NewEmailCmd) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Notify not implemented")
 }
 func (UnimplementedNewEmailNotifServer) mustEmbedUnimplementedNewEmailNotifServer() {}
@@ -193,7 +194,7 @@ func RegisterNewEmailNotifServer(s grpc.ServiceRegistrar, srv NewEmailNotifServe
 }
 
 func _NewEmailNotif_Notify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NewEmailCom)
+	in := new(NewEmailCmd)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -205,7 +206,7 @@ func _NewEmailNotif_Notify_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: "/email_proto.NewEmailNotif/Notify",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NewEmailNotifServer).Notify(ctx, req.(*NewEmailCom))
+		return srv.(NewEmailNotifServer).Notify(ctx, req.(*NewEmailCmd))
 	}
 	return interceptor(ctx, in, info, handler)
 }

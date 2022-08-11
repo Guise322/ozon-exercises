@@ -1,4 +1,4 @@
-package cmd_handler
+package handler
 
 import (
 	"context"
@@ -8,9 +8,9 @@ import (
 	"github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
 )
 
-type EmailCmdHandler struct{}
+type SubCmdHandler struct{}
 
-func (EmailCmdHandler) Handle(ctx context.Context, cmd contract.EmailCommand) (*contract.EmailCmdResult, error) {
+func (SubCmdHandler) Handle(ctx context.Context, cmd contract.SubscribtionCmd) (*contract.SubCmdResult, error) {
 	ticker := time.NewTicker(5 * time.Millisecond)
 	defer ticker.Stop()
 
@@ -19,5 +19,5 @@ func (EmailCmdHandler) Handle(ctx context.Context, cmd contract.EmailCommand) (*
 	case <-ctx.Done():
 		return nil, errors.New("timeout")
 	}
-	return &contract.EmailCmdResult{Data: "Hello there!"}, nil
+	return &contract.SubCmdResult{Error: "Hello there!"}, nil
 }

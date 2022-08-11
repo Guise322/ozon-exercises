@@ -4,34 +4,38 @@ package email_proto;
 
 option go_package = "github.com/Guise322/ozon-exercises/common/email_service_pb/";
 
-message SubscribeCom {}
+import "google/protobuf/empty.proto";
 
-message ComResponse {
-    string Result = 1;
+message SubscribtionCmd {
+    string EmailLogin = 1;
+    string EmailPass = 2;
 }
 
-message EmailRequest {
-    int64 Id = 1;
+message SubCmdResponse {
+    string Error = 1;
 }
 
-message EmailResponse {
+message UnreadCountRequest {
+    string EmailLogin = 1;
+    string EmailPass = 2;
+}
+
+message UnreadCountResponse {
+    int64 MessageCount = 1;
+    string Error = 2;
+}
+
+service UnreadEmailCount {
+    rpc GetUnreadEmailCount (UnreadCountRequest) returns (UnreadCountResponse);
+    rpc SubscribeToInbox (SubscribtionCmd) returns (SubCmdResponse);
+}
+
+message NewEmailCmd {
     int64 Id = 1;
     string From = 2;
-    string To = 3;
-    string Text = 4;
+    string Message = 3;
 }
-
-service Email {
-    rpc GetEmail (EmailRequest) returns (EmailResponse);
-    rpc SubscribeToInbox (SubscribeCom) returns (ComResponse);
-}
-
-message NewEmailCom {
-    int64 Id = 1; 
-}
-
-message Empty {}
 
 service NewEmailNotif {
-    rpc Notify(NewEmailCom) returns (Empty);
+    rpc Notify(NewEmailCmd) returns (google.protobuf.Empty);
 }

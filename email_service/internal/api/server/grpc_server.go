@@ -1,12 +1,12 @@
 package server
 
 import (
-	pb "github.com/Guise322/ozon-exercises/common/email_service_pb"
+	pb "github.com/Guise322/ozon-exercises/common/email_service_pb/common/proto"
 	"github.com/Guise322/ozon-exercises/email_service/internal/app"
 )
 
 type server struct {
-	pb.UnimplementedEmailServer
+	pb.UnimplementedUnreadEmailCountServer
 	mediator app.Mediator
 }
 
