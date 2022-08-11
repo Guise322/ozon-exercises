@@ -1,4 +1,4 @@
-package cmd_handler
+package handler
 
 import (
 	"context"

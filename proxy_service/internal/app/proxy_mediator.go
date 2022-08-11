@@ -1,15 +1,15 @@
 package app
 
-import "github.com/Guise322/ozon-exercises/proxy_service/internal/app/cmd_handler"
+import "github.com/Guise322/ozon-exercises/proxy_service/internal/app/handler"
 
 type proxyMediator struct {
-	notifHandler cmd_handler.NotifCmdHandler
-	subHandler   cmd_handler.SubCmdHandler
+	notifHandler handler.NotifCmdHandler
+	subHandler   handler.SubCmdHandler
 }
 
 func NewProxyMediator() *proxyMediator {
 	return &proxyMediator{
-		notifHandler: cmd_handler.NotifCmdHandler{},
-		subHandler:   cmd_handler.SubCmdHandler{},
+		notifHandler: handler.NotifCmdHandler{},
+		subHandler:   handler.SubCmdHandler{},
 	}
 }

@@ -3,14 +3,21 @@ package http_server
 import (
 	"net/http"
 
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/api"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
 )
 
 func (s httpServer) subscribeToInbox(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		w.WriteHeader(http.StatusNotImplemented)
+		return
 	}
 	login := r.URL.Query().Get("login")
 	pass := r.URL.Query().Get("password")
-	s.mediator.Handle(r.Context(), contract.ProxySubCmd{Login: login, Pass: pass})
+	_, err := s.mediator.Handle(r.Context(), contract.ProxySubCmd{Login: login, Pass: pass})
+	if err != nil {
+		api.WriteServerResult(&w, http.StatusInternalServerError, err)
+		return
+	}
+	api.WriteServerResult(&w, http.StatusOK, nil)
 }

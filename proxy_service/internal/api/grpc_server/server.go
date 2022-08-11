@@ -1,7 +1,7 @@
 package grpc_server
 
 import (
-	pb "github.com/Guise322/ozon-exercises/common/email_service_pb"
+	pb "github.com/Guise322/ozon-exercises/common/email_service_pb/common/proto"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app"
 )
 
