@@ -5,6 +5,7 @@ import (
 
 	"github.com/Guise322/ozon-exercises/common"
 	"github.com/Guise322/ozon-exercises/email_service/internal/api/server"
+	"github.com/Guise322/ozon-exercises/email_service/internal/infra"
 )
 
 const (
@@ -18,7 +19,11 @@ func main() {
 
 func runServer() error {
 	path := getPath()
-	return server.RunGRPCSrv(path)
+	cl, err := infra.NewNotifClient(path)
+	if err != nil {
+		return err
+	}
+	return server.RunGRPCSrv(path, cl)
 }
 
 func getPath() string {

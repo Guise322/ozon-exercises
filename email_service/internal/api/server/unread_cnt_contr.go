@@ -8,7 +8,7 @@ import (
 	"github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
 )
 
-func (s server) GetUnreadEmailCount(
+func (s *server) GetUnreadEmailCount(
 	ctx context.Context,
 	in *pb.UnreadCountRequest,
 ) (*pb.UnreadCountResponse, error) {

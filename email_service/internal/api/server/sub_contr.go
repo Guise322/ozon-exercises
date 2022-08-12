@@ -8,7 +8,7 @@ import (
 	"github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
 )
 
-func (s server) SubscribeToInbox(
+func (s *server) SubscribeToInbox(
 	ctx context.Context,
 	in *pb.SubscribtionCmd,
 ) (*pb.SubCmdResponse, error) {

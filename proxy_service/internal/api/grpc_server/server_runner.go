@@ -5,11 +5,13 @@ import (
 	"net"
 
 	pb "github.com/Guise322/ozon-exercises/common/email_service_pb/common/proto"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal"
 	"google.golang.org/grpc"
 )
 
 func RunGRPCSrv(confPath string) error {
-	conf, err := readConfig(confPath)
+	var conf GRPCConf
+	err := internal.ReadConfig(&conf, confPath)
 	if err != nil {
 		return err
 	}
