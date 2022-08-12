@@ -8,10 +8,6 @@ import (
 )
 
 func (s httpServer) subscribeToInbox(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
-		w.WriteHeader(http.StatusNotImplemented)
-		return
-	}
 	login := r.URL.Query().Get("login")
 	pass := r.URL.Query().Get("password")
 	_, err := s.mediator.Handle(r.Context(), contract.ProxySubCmd{Login: login, Pass: pass})

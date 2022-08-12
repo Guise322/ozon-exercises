@@ -13,6 +13,8 @@ func (m *proxyMediator) Handle(ctx context.Context, msg interface{}) (interface{
 		return nil, m.subHandler.Handle(ctx, s)
 	case contract.NotifCmd:
 		return nil, m.notifHandler.Handle(ctx, s)
+	case contract.UnreadCntReq:
+		return m.unreadCntHandler.Handle(ctx, s)
 	default:
 		return nil, errors.New("undefined msg")
 	}
