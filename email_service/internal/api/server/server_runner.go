@@ -25,7 +25,7 @@ func RunGRPCSrv(path string, cl interf.NotifClient) error {
 	var opts []grpc.ServerOption
 	useInterceptors(&opts, conf.Server.TimeoutInMils)
 	grpcServer := grpc.NewServer(opts...)
-	pb.RegisterUnreadEmailCountServer(grpcServer, newGRPCServer(cl))
+	pb.RegisterEmailServiceServer(grpcServer, newGRPCServer(cl))
 	if err := grpcServer.Serve(lis); err != nil {
 		return err
 	}

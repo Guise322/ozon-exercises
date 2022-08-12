@@ -6,6 +6,7 @@ import (
 	"github.com/Guise322/ozon-exercises/common"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/grpc_server"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/http_server"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra"
 )
 
 const (
@@ -44,5 +45,9 @@ func runGRPCServer() error {
 
 func runHTTPServer() error {
 	path := getConfPath()
-	return http_server.RunHTTPSrv(path)
+	cl, err := infra.NewSubClient(path)
+	if err != nil {
+		return err
+	}
+	return http_server.RunHTTPSrv(path, cl)
 }

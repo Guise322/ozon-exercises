@@ -7,7 +7,7 @@ import (
 )
 
 type server struct {
-	pb.UnimplementedUnreadEmailCountServer
+	pb.UnimplementedEmailServiceServer
 	mediator app.Mediator
 }
 

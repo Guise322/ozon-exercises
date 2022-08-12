@@ -25,7 +25,7 @@ message UnreadCountResponse {
     string Error = 2;
 }
 
-service UnreadEmailCount {
+service EmailService {
     rpc GetUnreadEmailCount (UnreadCountRequest) returns (UnreadCountResponse);
     rpc SubscribeToInbox (SubscribtionCmd) returns (SubCmdResponse);
 }

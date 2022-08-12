@@ -10,7 +10,7 @@ import (
 func (m *proxyMediator) Handle(ctx context.Context, msg interface{}) (interface{}, error) {
 	switch s := msg.(type) {
 	case contract.ProxySubCmd:
-		return nil, m.subHandler.Handle(ctx, s)
+		return nil, m.subHandler.Handle(ctx, &s)
 	case contract.NotifCmd:
 		return nil, m.notifHandler.Handle(ctx, s)
 	case contract.UnreadCntReq:

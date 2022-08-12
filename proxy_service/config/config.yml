@@ -4,3 +4,6 @@ grpcServer:
 httpServer:
   host: "localhost"
   port: 5003
+subClient:
+  host: "localhost"
+  port: 5001

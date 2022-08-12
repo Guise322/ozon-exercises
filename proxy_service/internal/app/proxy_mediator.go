@@ -1,6 +1,9 @@
 package app
 
-import "github.com/Guise322/ozon-exercises/proxy_service/internal/app/handler"
+import (
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/handler"
+	interf "github.com/Guise322/ozon-exercises/proxy_service/internal/app/interf"
+)
 
 type proxyMediator struct {
 	notifHandler     handler.NotifCmdHandler
@@ -8,10 +11,10 @@ type proxyMediator struct {
 	unreadCntHandler handler.UnreadCntHandler
 }
 
-func NewProxyMediator() *proxyMediator {
+func NewProxyMediator(cl interf.SubClient) *proxyMediator {
 	return &proxyMediator{
 		notifHandler:     handler.NotifCmdHandler{},
-		subHandler:       handler.SubCmdHandler{},
+		subHandler:       handler.SubCmdHandler{SubClient: cl},
 		unreadCntHandler: handler.UnreadCntHandler{},
 	}
 }

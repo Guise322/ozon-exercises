@@ -11,5 +11,5 @@ type server struct {
 }
 
 func newGRPCServer() *server {
-	return &server{mediator: app.NewProxyMediator()}
+	return &server{mediator: app.NewProxyMediator(nil)}
 }
