@@ -4,8 +4,11 @@ import (
 	"log"
 
 	"github.com/Guise322/ozon-exercises/common"
+	"github.com/Guise322/ozon-exercises/common/mediator"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/grpc_server"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/http_server"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/handler"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra"
 )
 
@@ -40,7 +43,9 @@ func getConfPath() string {
 
 func runGRPCServer() error {
 	path := getConfPath()
-	return grpc_server.RunGRPCSrv(path)
+	grpcMed := mediator.NewMediator()
+	grpcMed.RegHandler(contract.NotifCmd{}, handler.NotifCmdHandler{})
+	return grpc_server.RunGRPCSrv(path, grpcMed)
 }
 
 func runHTTPServer() error {
@@ -49,5 +54,8 @@ func runHTTPServer() error {
 	if err != nil {
 		return err
 	}
-	return http_server.RunHTTPSrv(path, cl)
+	httpMed := mediator.NewMediator()
+	httpMed.RegHandler(&contract.ProxySubCmd{}, &handler.SubCmdHandler{SubClient: cl})
+	httpMed.RegHandler(contract.UnreadCntReq{}, handler.UnreadCntHandler{})
+	return http_server.RunHTTPSrv(path, httpMed)
 }

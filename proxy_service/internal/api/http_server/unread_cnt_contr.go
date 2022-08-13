@@ -10,7 +10,8 @@ import (
 func (s *httpServer) getUnreadEmailCnt(w http.ResponseWriter, r *http.Request) {
 	login := r.URL.Query().Get("login")
 	pass := r.URL.Query().Get("password")
-	res, err := s.mediator.Handle(r.Context(), contract.UnreadCntReq{
+	res, err := s.mediator.Handle(contract.UnreadCntReq{
+		Ctx:   r.Context(),
 		Login: login,
 		Pass:  pass,
 	})

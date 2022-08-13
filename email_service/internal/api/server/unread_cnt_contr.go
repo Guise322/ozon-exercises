@@ -12,7 +12,8 @@ func (s *server) GetUnreadEmailCount(
 	ctx context.Context,
 	in *pb.UnreadCountRequest,
 ) (*pb.UnreadCountResponse, error) {
-	res, err := s.mediator.Handle(ctx, contract.UnreadCountRequest{
+	res, err := s.mediator.Handle(contract.UnreadCountRequest{
+		Ctx:        ctx,
 		EmailLogin: in.EmailLogin,
 		EmailPass:  in.EmailPass,
 	})

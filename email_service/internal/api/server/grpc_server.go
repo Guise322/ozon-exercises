@@ -2,15 +2,14 @@ package server
 
 import (
 	pb "github.com/Guise322/ozon-exercises/common/email_service_pb/common/proto"
-	"github.com/Guise322/ozon-exercises/email_service/internal/app"
-	"github.com/Guise322/ozon-exercises/email_service/internal/app/interf"
+	"github.com/Guise322/ozon-exercises/common/mediator"
 )
 
 type server struct {
 	pb.UnimplementedEmailServiceServer
-	mediator app.Mediator
+	mediator mediator.Mediator
 }
 
-func newGRPCServer(cl interf.NotifClient) *server {
-	return &server{mediator: app.NewEmailMediator(cl)}
+func newGRPCServer(med mediator.Mediator) *server {
+	return &server{mediator: med}
 }
