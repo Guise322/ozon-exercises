@@ -12,7 +12,7 @@ func (s *server) SubscribeToInbox(
 	ctx context.Context,
 	in *pb.SubscribtionCmd,
 ) (*pb.SubCmdResponse, error) {
-	res, err := s.mediator.Handle(contract.SubscribtionCmd{
+	res, err := s.mediator.Handle(&contract.SubscribtionCmd{
 		Ctx:        ctx,
 		EmailLogin: in.EmailLogin,
 		EmailPass:  in.EmailPass,

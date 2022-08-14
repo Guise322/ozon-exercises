@@ -24,17 +24,6 @@ const (
 func main() {
 	go func() { log.Print(runGRPCServer()) }()
 	log.Fatal(runHTTPServer())
-	// conn, err := grpc.Dial(
-	// 	fmt.Sprintf("%v:%v", conf.Server.Host, conf.Server.Port),
-	// 	grpc.WithTransportCredentials(insecure.NewCredentials()),
-	// )
-	// if err != nil {
-	// 	log.Fatalf("error of creating a gRPC client: %v", err)
-	// }
-	// defer conn.Close()
-	// client := email_service_pb.NewEmailClient(conn)
-	// resp, _ := client.SubscribeToInbox(context.Background(), &email_service_pb.SubscribeCom{})
-	// fmt.Printf("the response: %v", resp.Result)
 }
 
 func getConfPath() string {
