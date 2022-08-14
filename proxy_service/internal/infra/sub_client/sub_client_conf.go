@@ -1,4 +1,4 @@
-package infra
+package sub_client
 
 type SubClientConf struct {
 	SubClient struct {

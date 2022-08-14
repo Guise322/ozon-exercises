@@ -7,3 +7,6 @@ httpServer:
 subClient:
   host: "localhost"
   port: 5001
+unreadCntClient:
+  host: "localhost"
+  port: 5001

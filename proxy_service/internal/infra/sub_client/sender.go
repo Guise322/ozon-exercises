@@ -1,4 +1,4 @@
-package infra
+package sub_client
 
 import (
 	"context"

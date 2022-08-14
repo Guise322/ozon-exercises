@@ -8,8 +8,11 @@ import (
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/grpc_server"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/http_server"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
-	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/handler"
-	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/handler/notif_cmd_handler"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/handler/sub_cmd_handler"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/handler/unread_cnt_handler"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra/sub_client"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra/unread_cnt_client.go"
 )
 
 const (
@@ -44,18 +47,22 @@ func getConfPath() string {
 func runGRPCServer() error {
 	path := getConfPath()
 	grpcMed := mediator.NewMediator()
-	grpcMed.RegHandler(contract.NotifCmd{}, handler.NotifCmdHandler{})
+	grpcMed.RegHandler(contract.NotifCmd{}, notif_cmd_handler.NewNotifCmdHandler())
 	return grpc_server.RunGRPCSrv(path, grpcMed)
 }
 
 func runHTTPServer() error {
 	path := getConfPath()
-	cl, err := infra.NewSubClient(path)
+	subCl, err := sub_client.NewSubClient(path)
+	if err != nil {
+		return err
+	}
+	unreadCl, err := unread_cnt_client.NewUnreadCntClient(path)
 	if err != nil {
 		return err
 	}
 	httpMed := mediator.NewMediator()
-	httpMed.RegHandler(&contract.ProxySubCmd{}, &handler.SubCmdHandler{SubClient: cl})
-	httpMed.RegHandler(contract.UnreadCntReq{}, handler.UnreadCntHandler{})
+	httpMed.RegHandler(&contract.ProxySubCmd{}, sub_cmd_handler.NewSubCmdHandler(subCl))
+	httpMed.RegHandler(&contract.UnreadCntReq{}, unread_cnt_handler.NewUnreadCntHandler(unreadCl))
 	return http_server.RunHTTPSrv(path, httpMed)
 }
