@@ -10,3 +10,5 @@ subClient:
 unreadCntClient:
   host: "localhost"
   port: 5001
+notifClient:
+  url: "http//:boturl.com/"

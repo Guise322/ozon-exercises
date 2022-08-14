@@ -9,6 +9,6 @@ import (
 )
 
 func (s server) Notify(ctx context.Context, in *pb.NewEmailCmd) (*emptypb.Empty, error) {
-	_, err := s.mediator.Handle(contract.NotifCmd{Ctx: ctx, Id: in.Id, From: in.From, Message: in.Message})
+	_, err := s.mediator.Handle(&contract.NotifCmd{Ctx: ctx, Id: in.Id, From: in.From, Message: in.Message})
 	return &emptypb.Empty{}, err
 }

@@ -5,6 +5,10 @@ import (
 	"github.com/golang/protobuf/ptypes/empty"
 )
 
-func (*notifCmdHandler) Handle(cmd contract.NotifCmd) (empty.Empty, error) {
+func (h *notifCmdHandler) Handle(cmd *contract.NotifCmd) (empty.Empty, error) {
+	_, err := h.cl.Notify(cmd)
+	if err != nil {
+		return empty.Empty{}, err
+	}
 	return empty.Empty{}, nil
 }

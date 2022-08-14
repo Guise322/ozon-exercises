@@ -1,7 +1,13 @@
 package notif_cmd_handler
 
-type notifCmdHandler struct{}
+import (
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/interf"
+)
 
-func NewNotifCmdHandler() *notifCmdHandler {
-	return &notifCmdHandler{}
+type notifCmdHandler struct {
+	cl interf.NotifClient
+}
+
+func NewNotifCmdHandler(cl interf.NotifClient) *notifCmdHandler {
+	return &notifCmdHandler{cl: cl}
 }

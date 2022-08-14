@@ -13,7 +13,7 @@ type SubCmdHandler struct {
 }
 
 func (h *SubCmdHandler) Handle(cmd contract.SubscribtionCmd) (*contract.SubCmdResult, error) {
-	ticker := time.NewTicker(5 * time.Millisecond)
+	ticker := time.NewTicker(1 * time.Nanosecond)
 	defer ticker.Stop()
 	select {
 	case <-ticker.C:

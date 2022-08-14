@@ -11,6 +11,7 @@ import (
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/handler/notif_cmd_handler"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/handler/sub_cmd_handler"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/handler/unread_cnt_handler"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra/notif_client"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra/sub_client"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra/unread_cnt_client.go"
 )
@@ -46,8 +47,12 @@ func getConfPath() string {
 
 func runGRPCServer() error {
 	path := getConfPath()
+	notifCl, err := notif_client.NewNotifClient(path)
+	if err != nil {
+		return err
+	}
 	grpcMed := mediator.NewMediator()
-	grpcMed.RegHandler(contract.NotifCmd{}, notif_cmd_handler.NewNotifCmdHandler())
+	grpcMed.RegHandler(&contract.NotifCmd{}, notif_cmd_handler.NewNotifCmdHandler(notifCl))
 	return grpc_server.RunGRPCSrv(path, grpcMed)
 }
 
