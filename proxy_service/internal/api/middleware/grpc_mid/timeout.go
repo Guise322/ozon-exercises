@@ -1,4 +1,4 @@
-package middleware
+package grpc_mid
 
 type timeoutInterceptor struct {
 	timeout int64

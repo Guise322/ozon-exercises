@@ -16,7 +16,7 @@ func RunHTTPSrv(confPath string, med mediator.Mediator) error {
 	}
 	httpServ := newHTTPServer(med)
 	address := fmt.Sprintf("%v:%v", conf.Server.Host, conf.Server.Port)
-	httpServ.UseRoutes()
+	httpServ.UseRoutes(conf.Server.Timeout)
 	err = http.ListenAndServe(address, nil)
 	if err != nil {
 		return err

@@ -24,10 +24,6 @@ func main() {
 
 func runServer() error {
 	path := getPath()
-	// cl, err := notif_client.NewNotifClient(path)
-	// if err != nil {
-	// 	return err
-	// }
 	med := mediator.NewMediator()
 	subClient, err := sub_client.NewSubClient()
 	if err != nil {

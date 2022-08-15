@@ -1,4 +1,4 @@
-package middleware
+package http_mid
 
 type HTTPMethValid struct {
 	method string

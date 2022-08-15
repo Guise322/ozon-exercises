@@ -1,14 +1,19 @@
 grpcServer: 
   host: "localhost"
   port: 5002
+  timeoutInMilSec: 500
 httpServer:
   host: "localhost"
   port: 5003
+  timeoutInMilSec: 500
 subClient:
   host: "localhost"
   port: 5001
+  timeoutInMilSec: 400
 unreadCntClient:
   host: "localhost"
   port: 5001
+  timeoutInMilSec: 400
 notifClient:
   url: "http//:boturl.com/"
+  timeoutInMilSec: 400
