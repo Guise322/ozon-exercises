@@ -1,4 +1,4 @@
-package sub_cmd_handler
+package subscr
 
 import "github.com/Guise322/ozon-exercises/email_service/internal/app/interf"
 

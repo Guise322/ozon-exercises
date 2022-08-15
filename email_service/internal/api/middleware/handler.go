@@ -7,7 +7,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-func (t *timeoutInterceptor) SetTimeout(
+func (t timeoutInterceptor) SetTimeout(
 	ctx context.Context,
 	req interface{},
 	info *grpc.UnaryServerInfo,

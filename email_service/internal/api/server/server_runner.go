@@ -23,7 +23,7 @@ func RunGRPCSrv(path string, med mediator.Mediator) error {
 	}
 	defer lis.Close()
 	var opts []grpc.ServerOption
-	useInterceptors(&opts, conf.Server.TimeoutInMils)
+	useInterceptors(&opts, conf.Server.TimeoutInMilSec)
 	grpcServer := grpc.NewServer(opts...)
 	pb.RegisterEmailServiceServer(grpcServer, newGRPCServer(med))
 	if err := grpcServer.Serve(lis); err != nil {

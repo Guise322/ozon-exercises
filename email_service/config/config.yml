@@ -1,7 +1,7 @@
 server: 
   host: "localhost"
   port: 5001
-  timeoutInMils: 1000
+  timeoutInMilSec: 400
 notifClient:
   host: "localhost"
   port: 5002

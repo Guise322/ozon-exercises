@@ -1,4 +1,4 @@
-package unread_cnt_handler
+package unread_cnt
 
 import "github.com/Guise322/ozon-exercises/email_service/internal/app/interf"
 
