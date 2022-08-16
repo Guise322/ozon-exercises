@@ -1,7 +1,11 @@
 package interf
 
-import "github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
+import (
+	"context"
+
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
+)
 
 type NotifClient interface {
-	Notify(cmd *contract.NotifCmd) error
+	Notify(ctx context.Context, cmd *contract.NotifCmd) error
 }

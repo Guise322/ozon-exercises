@@ -16,15 +16,14 @@ func NewUnreadCntHandler(cl interf.UnreadCntClient) *unreadCntHandler {
 	return &unreadCntHandler{cl: cl}
 }
 
-func (h *unreadCntHandler) Handle(req *contract.UnreadCountRequest) (*contract.UnreadReqResult, error) {
+func (h *unreadCntHandler) Handle(ctx context.Context, req *contract.UnreadCountRequest) (*contract.UnreadReqResult, error) {
 	resCh := make(chan struct{})
 	var (
 		res *contract.UnreadReqResult
 		err error
 	)
 	go func() {
-		res, err = h.cl.GetUnreadEmailCnt(&contract.UnreadCountRequest{
-			Ctx:        req.Ctx,
+		res, err = h.cl.GetUnreadEmailCnt(ctx, &contract.UnreadCountRequest{
 			EmailLogin: req.EmailLogin,
 			EmailPass:  req.EmailPass,
 		})
@@ -33,8 +32,8 @@ func (h *unreadCntHandler) Handle(req *contract.UnreadCountRequest) (*contract.U
 	select {
 	case <-resCh:
 		return res, err
-	case <-req.Ctx.Done():
-		switch req.Ctx.Err() {
+	case <-ctx.Done():
+		switch ctx.Err() {
 		case context.DeadlineExceeded:
 			return nil, errors.New("processing too slow")
 		default:

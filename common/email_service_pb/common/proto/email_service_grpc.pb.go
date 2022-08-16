@@ -24,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type EmailServiceClient interface {
 	GetUnreadEmailCount(ctx context.Context, in *UnreadCountRequest, opts ...grpc.CallOption) (*UnreadCountResponse, error)
-	SubscribeToInbox(ctx context.Context, in *SubscribtionCmd, opts ...grpc.CallOption) (*SubCmdResponse, error)
+	SubscribeToInbox(ctx context.Context, in *SubscribtionCmd, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type emailServiceClient struct {
@@ -44,8 +44,8 @@ func (c *emailServiceClient) GetUnreadEmailCount(ctx context.Context, in *Unread
 	return out, nil
 }
 
-func (c *emailServiceClient) SubscribeToInbox(ctx context.Context, in *SubscribtionCmd, opts ...grpc.CallOption) (*SubCmdResponse, error) {
-	out := new(SubCmdResponse)
+func (c *emailServiceClient) SubscribeToInbox(ctx context.Context, in *SubscribtionCmd, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/email_proto.EmailService/SubscribeToInbox", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -58,7 +58,7 @@ func (c *emailServiceClient) SubscribeToInbox(ctx context.Context, in *Subscribt
 // for forward compatibility
 type EmailServiceServer interface {
 	GetUnreadEmailCount(context.Context, *UnreadCountRequest) (*UnreadCountResponse, error)
-	SubscribeToInbox(context.Context, *SubscribtionCmd) (*SubCmdResponse, error)
+	SubscribeToInbox(context.Context, *SubscribtionCmd) (*emptypb.Empty, error)
 	mustEmbedUnimplementedEmailServiceServer()
 }
 
@@ -69,7 +69,7 @@ type UnimplementedEmailServiceServer struct {
 func (UnimplementedEmailServiceServer) GetUnreadEmailCount(context.Context, *UnreadCountRequest) (*UnreadCountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUnreadEmailCount not implemented")
 }
-func (UnimplementedEmailServiceServer) SubscribeToInbox(context.Context, *SubscribtionCmd) (*SubCmdResponse, error) {
+func (UnimplementedEmailServiceServer) SubscribeToInbox(context.Context, *SubscribtionCmd) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SubscribeToInbox not implemented")
 }
 func (UnimplementedEmailServiceServer) mustEmbedUnimplementedEmailServiceServer() {}

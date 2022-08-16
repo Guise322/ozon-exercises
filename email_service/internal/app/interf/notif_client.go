@@ -1,7 +1,11 @@
 package interf
 
-import "github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
+import (
+	"context"
+
+	"github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
+)
 
 type NotifClient interface {
-	SendNotif(cmd *contract.NotifCmd) error
+	SendNotif(ctx context.Context, cmd *contract.NotifCmd) error
 }

@@ -1,6 +1,7 @@
 package notif
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"net/http"
@@ -18,8 +19,12 @@ func NewNotifClient(c conf.NotifClientConf) *notifClient {
 	return &notifClient{client: http.Client{}, url: c.NotifClient.URL}
 }
 
-func (c *notifClient) Notify(cmd *contract.NotifCmd) error {
-	res, err := c.client.Post(c.url, "application/json", nil)
+func (c *notifClient) Notify(ctx context.Context, cmd *contract.NotifCmd) error {
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.url, nil)
+	if err != nil {
+		return err
+	}
+	res, err := c.client.Do(req)
 	if err != nil {
 		return err
 	}

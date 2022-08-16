@@ -22,7 +22,7 @@ func NewNotifClient(c conf.NotifClientConf) (*notifClient, error) {
 	return &notifClient{newEmailNotifClient: grpcClient}, nil
 }
 
-func (c *notifClient) SendNotif(cmd *contract.NotifCmd) error {
+func (c *notifClient) SendNotif(ctx context.Context, cmd *contract.NotifCmd) error {
 	_, err := c.newEmailNotifClient.Notify(context.Background(), &pb.NewEmailCmd{
 		Id:      cmd.Id,
 		From:    cmd.From,

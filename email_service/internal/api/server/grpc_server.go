@@ -7,6 +7,7 @@ import (
 	pb "github.com/Guise322/ozon-exercises/common/email_service_pb/common/proto"
 	"github.com/Guise322/ozon-exercises/common/mediator"
 	"github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
+	"github.com/golang/protobuf/ptypes/empty"
 )
 
 type server struct {
@@ -21,28 +22,19 @@ func newGRPCServer(med mediator.Mediator) *server {
 func (s *server) SubscribeToInbox(
 	ctx context.Context,
 	in *pb.SubscribtionCmd,
-) (*pb.SubCmdResponse, error) {
-	res, err := s.mediator.Handle(&contract.SubscribtionCmd{
-		Ctx:        ctx,
+) (*empty.Empty, error) {
+	_, err := s.mediator.Handle(ctx, &contract.SubscribtionCmd{
 		EmailLogin: in.EmailLogin,
 		EmailPass:  in.EmailPass,
 	})
-	if err != nil {
-		return nil, err
-	}
-	cmdRes, ok := res.(*contract.SubCmdResult)
-	if !ok {
-		return nil, fmt.Errorf("wrong response format: %v", cmdRes)
-	}
-	return &pb.SubCmdResponse{Error: cmdRes.Error}, nil
+	return &empty.Empty{}, err
 }
 
 func (s *server) GetUnreadEmailCount(
 	ctx context.Context,
 	in *pb.UnreadCountRequest,
 ) (*pb.UnreadCountResponse, error) {
-	res, err := s.mediator.Handle(&contract.UnreadCountRequest{
-		Ctx:        ctx,
+	res, err := s.mediator.Handle(ctx, &contract.UnreadCountRequest{
 		EmailLogin: in.EmailLogin,
 		EmailPass:  in.EmailPass,
 	})
@@ -53,5 +45,5 @@ func (s *server) GetUnreadEmailCount(
 	if !ok {
 		return nil, fmt.Errorf("wrong response format: %v", reqRes)
 	}
-	return &pb.UnreadCountResponse{MessageCount: reqRes.MessageCount, Error: reqRes.Error}, nil
+	return &pb.UnreadCountResponse{MessageCount: reqRes.MessageCount}, nil
 }

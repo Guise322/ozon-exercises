@@ -19,6 +19,10 @@ func newGRPCServer(med mediator.Mediator) *server {
 }
 
 func (s server) Notify(ctx context.Context, in *pb.NewEmailCmd) (*empty.Empty, error) {
-	_, err := s.mediator.Handle(&contract.NotifCmd{Ctx: ctx, Id: in.Id, From: in.From, Message: in.Message})
+	_, err := s.mediator.Handle(ctx, &contract.NotifCmd{
+		Id:      in.Id,
+		From:    in.From,
+		Message: in.Message,
+	})
 	return &empty.Empty{}, err
 }

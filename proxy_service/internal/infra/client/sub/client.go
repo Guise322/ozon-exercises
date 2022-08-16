@@ -22,8 +22,8 @@ func NewSubClient(c conf.SubClientConf) (*subClient, error) {
 	return &subClient{emailServiceClient: grpcClient}, nil
 }
 
-func (c *subClient) SubToInbox(cmd *contract.ProxySubCmd) error {
-	_, err := c.emailServiceClient.SubscribeToInbox(context.Background(), &pb.SubscribtionCmd{
+func (c *subClient) SubToInbox(ctx context.Context, cmd *contract.ProxySubCmd) error {
+	_, err := c.emailServiceClient.SubscribeToInbox(ctx, &pb.SubscribtionCmd{
 		EmailLogin: cmd.Login,
 		EmailPass:  cmd.Pass,
 	})

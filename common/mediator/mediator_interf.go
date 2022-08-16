@@ -1,5 +1,7 @@
 package mediator
 
+import "context"
+
 type Mediator interface {
-	Handle(msg interface{}) (interface{}, error)
+	Handle(ctx context.Context, msg interface{}) (interface{}, error)
 }

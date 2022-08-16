@@ -18,9 +18,9 @@ func newHTTPServer(med mediator.Mediator) *httpServer {
 func (s *httpServer) SubscribeToInbox(w http.ResponseWriter, r *http.Request) {
 	login := r.URL.Query().Get("login")
 	pass := r.URL.Query().Get("password")
-	_, err := s.mediator.Handle(&contract.ProxySubCmd{Ctx: r.Context(), Login: login, Pass: pass})
+	_, err := s.mediator.Handle(r.Context(), &contract.ProxySubCmd{Login: login, Pass: pass})
 	if err != nil {
-		writeServerResult(&w, http.StatusInternalServerError, err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	writeServerResult(&w, http.StatusOK, nil)
@@ -29,8 +29,7 @@ func (s *httpServer) SubscribeToInbox(w http.ResponseWriter, r *http.Request) {
 func (s *httpServer) GetUnreadEmailCnt(w http.ResponseWriter, r *http.Request) {
 	login := r.URL.Query().Get("login")
 	pass := r.URL.Query().Get("password")
-	res, err := s.mediator.Handle(&contract.UnreadCntReq{
-		Ctx:   r.Context(),
+	res, err := s.mediator.Handle(r.Context(), &contract.UnreadCntReq{
 		Login: login,
 		Pass:  pass,
 	})

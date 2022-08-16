@@ -16,15 +16,11 @@ func NewSubCmdHandler(cl interf.SubClient) *subCmdHandler {
 	return &subCmdHandler{cl: cl}
 }
 
-func (h *subCmdHandler) Handle(cmd *contract.SubscribtionCmd) (*contract.SubCmdResult, error) {
+func (h *subCmdHandler) Handle(ctx context.Context, cmd *contract.SubscribtionCmd) (interface{}, error) {
 	resCh := make(chan struct{})
-	var (
-		res *contract.SubCmdResult
-		err error
-	)
+	var err error
 	go func() {
-		res, err = h.cl.SubToInbox(&contract.SubscribtionCmd{
-			Ctx:        cmd.Ctx,
+		err = h.cl.SubToInbox(ctx, &contract.SubscribtionCmd{
 			EmailLogin: cmd.EmailLogin,
 			EmailPass:  cmd.EmailPass,
 		})
@@ -32,9 +28,9 @@ func (h *subCmdHandler) Handle(cmd *contract.SubscribtionCmd) (*contract.SubCmdR
 	}()
 	select {
 	case <-resCh:
-		return res, err
-	case <-cmd.Ctx.Done():
-		switch cmd.Ctx.Err() {
+		return nil, err
+	case <-ctx.Done():
+		switch ctx.Err() {
 		case context.DeadlineExceeded:
 			return nil, errors.New("processing too slow")
 		default:

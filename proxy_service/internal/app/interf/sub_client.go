@@ -1,7 +1,11 @@
 package interf
 
-import "github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
+import (
+	"context"
+
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
+)
 
 type SubClient interface {
-	SubToInbox(cmd *contract.ProxySubCmd) error
+	SubToInbox(ctx context.Context, cmd *contract.ProxySubCmd) error
 }

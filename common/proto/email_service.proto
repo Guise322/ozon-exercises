@@ -11,10 +11,6 @@ message SubscribtionCmd {
     string EmailPass = 2;
 }
 
-message SubCmdResponse {
-    string Error = 1;
-}
-
 message UnreadCountRequest {
     string EmailLogin = 1;
     string EmailPass = 2;
@@ -22,12 +18,11 @@ message UnreadCountRequest {
 
 message UnreadCountResponse {
     int64 MessageCount = 1;
-    string Error = 2;
 }
 
 service EmailService {
     rpc GetUnreadEmailCount (UnreadCountRequest) returns (UnreadCountResponse);
-    rpc SubscribeToInbox (SubscribtionCmd) returns (SubCmdResponse);
+    rpc SubscribeToInbox (SubscribtionCmd) returns (google.protobuf.Empty);
 }
 
 message NewEmailCmd {

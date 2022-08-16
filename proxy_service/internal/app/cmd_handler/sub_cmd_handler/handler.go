@@ -16,19 +16,19 @@ func NewSubCmdHandler(subClient interf.SubClient) *subCmdHandler {
 	return &subCmdHandler{subClient: subClient}
 }
 
-func (h *subCmdHandler) Handle(cmd *contract.ProxySubCmd) (interface{}, error) {
+func (h *subCmdHandler) Handle(ctx context.Context, cmd *contract.ProxySubCmd) (interface{}, error) {
 	resCh := make(chan struct{})
 	var err error
 	go func() {
-		err = h.subClient.SubToInbox(cmd)
+		err = h.subClient.SubToInbox(ctx, cmd)
 		resCh <- struct{}{}
 	}()
 
 	select {
 	case <-resCh:
 		return nil, err
-	case <-cmd.Ctx.Done():
-		switch cmd.Ctx.Err() {
+	case <-ctx.Done():
+		switch ctx.Err() {
 		case context.DeadlineExceeded:
 			return nil, errors.New("processing too slow")
 		default:
