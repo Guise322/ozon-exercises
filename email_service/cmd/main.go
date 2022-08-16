@@ -9,6 +9,7 @@ import (
 	"github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
 	"github.com/Guise322/ozon-exercises/email_service/internal/app/handler/subscr"
 	"github.com/Guise322/ozon-exercises/email_service/internal/app/handler/unread_cnt"
+	"github.com/Guise322/ozon-exercises/email_service/internal/conf"
 	"github.com/Guise322/ozon-exercises/email_service/internal/infra/sub_client"
 	"github.com/Guise322/ozon-exercises/email_service/internal/infra/unread_cnt_client"
 )
@@ -35,7 +36,12 @@ func runServer() error {
 	}
 	med.RegHandler(&contract.SubscribtionCmd{}, subscr.NewSubCmdHandler(subClient))
 	med.RegHandler(&contract.UnreadCountRequest{}, unread_cnt.NewUnreadCntHandler(unreadCntClient))
-	return server.RunGRPCSrv(path, med)
+	var servConf conf.ServConf
+	err = conf.ReadConfig(&servConf, path)
+	if err != nil {
+		return err
+	}
+	return server.RunGRPCSrv(servConf, med)
 }
 
 func getPath() string {

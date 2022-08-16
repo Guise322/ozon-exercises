@@ -1,4 +1,4 @@
-package notif_client
+package conf
 
 type NotifClientConf struct {
 	NotifClient struct {

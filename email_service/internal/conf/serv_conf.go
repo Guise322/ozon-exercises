@@ -1,4 +1,4 @@
-package server
+package conf
 
 type ServConf struct {
 	Server struct {
