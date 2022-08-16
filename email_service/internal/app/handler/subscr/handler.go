@@ -3,7 +3,6 @@ package subscr
 import (
 	"context"
 	"errors"
-	"time"
 
 	"github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
 	"github.com/Guise322/ozon-exercises/email_service/internal/app/interf"
@@ -29,7 +28,6 @@ func (h *subCmdHandler) Handle(cmd *contract.SubscribtionCmd) (*contract.SubCmdR
 			EmailLogin: cmd.EmailLogin,
 			EmailPass:  cmd.EmailPass,
 		})
-		time.Sleep(500 * time.Millisecond)
 		resCh <- struct{}{}
 	}()
 	select {
