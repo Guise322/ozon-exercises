@@ -1,6 +1,7 @@
 package http_server
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/Guise322/ozon-exercises/common/mediator"
@@ -20,7 +21,11 @@ func (s *httpServer) SubscribeToInbox(w http.ResponseWriter, r *http.Request) {
 	pass := r.URL.Query().Get("password")
 	_, err := s.mediator.Handle(r.Context(), &contract.ProxySubCmd{Login: login, Pass: pass})
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(
+			w,
+			fmt.Sprintf("proxy_service: %v", err.Error()),
+			http.StatusInternalServerError,
+		)
 		return
 	}
 	writeServerResult(&w, http.StatusOK, nil)
@@ -34,7 +39,11 @@ func (s *httpServer) GetUnreadEmailCnt(w http.ResponseWriter, r *http.Request) {
 		Pass:  pass,
 	})
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(
+			w,
+			fmt.Sprintf("proxy_service: %v", err.Error()),
+			http.StatusInternalServerError,
+		)
 		return
 	}
 	writeServerResult(&w, http.StatusOK, res)

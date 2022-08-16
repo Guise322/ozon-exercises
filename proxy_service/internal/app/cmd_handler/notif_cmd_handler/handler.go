@@ -2,11 +2,10 @@ package notif_cmd_handler
 
 import (
 	"context"
+	"errors"
 
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/interf"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
 type notifCmdHandler struct {
@@ -30,9 +29,9 @@ func (h *notifCmdHandler) Handle(ctx context.Context, cmd *contract.NotifCmd) (i
 	case <-ctx.Done():
 		switch ctx.Err() {
 		case context.DeadlineExceeded:
-			return nil, status.Error(codes.DeadlineExceeded, "processing too slow")
+			return nil, errors.New("processing too slow")
 		default:
-			return nil, status.Error(codes.Canceled, "canceled")
+			return nil, errors.New("canceled")
 		}
 	}
 }

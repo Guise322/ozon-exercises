@@ -8,6 +8,8 @@ import (
 	"github.com/Guise322/ozon-exercises/common/mediator"
 	"github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
 	"github.com/golang/protobuf/ptypes/empty"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type server struct {
@@ -27,7 +29,10 @@ func (s *server) SubscribeToInbox(
 		EmailLogin: in.EmailLogin,
 		EmailPass:  in.EmailPass,
 	})
-	return &empty.Empty{}, err
+	if err != nil {
+		return nil, status.Error(codes.Internal, fmt.Sprintf("email_service: %v", err.Error()))
+	}
+	return &empty.Empty{}, nil
 }
 
 func (s *server) GetUnreadEmailCount(
@@ -39,11 +44,14 @@ func (s *server) GetUnreadEmailCount(
 		EmailPass:  in.EmailPass,
 	})
 	if err != nil {
-		return nil, err
+		return nil, status.Error(codes.Internal, fmt.Sprintf("email_service: %v", err.Error()))
 	}
 	reqRes, ok := res.(*contract.UnreadReqResult)
 	if !ok {
-		return nil, fmt.Errorf("wrong response format: %v", reqRes)
+		return nil, status.Error(
+			codes.Internal,
+			fmt.Sprintf("email_service: wrong response format: %v", reqRes),
+		)
 	}
 	return &pb.UnreadCountResponse{MessageCount: reqRes.MessageCount}, nil
 }
