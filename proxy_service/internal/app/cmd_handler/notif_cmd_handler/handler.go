@@ -16,22 +16,22 @@ func NewNotifCmdHandler(cl interf.NotifClient) *notifCmdHandler {
 	return &notifCmdHandler{cl: cl}
 }
 
-func (h *notifCmdHandler) Handle(cmd *contract.NotifCmd) error {
+func (h *notifCmdHandler) Handle(cmd *contract.NotifCmd) (interface{}, error) {
 	resCh := make(chan struct{})
 	var err error
 	go func() {
-		_, err = h.cl.Notify(cmd)
+		err = h.cl.Notify(cmd)
 		resCh <- struct{}{}
 	}()
 	select {
 	case <-resCh:
-		return err
+		return nil, err
 	case <-cmd.Ctx.Done():
 		switch cmd.Ctx.Err() {
 		case context.DeadlineExceeded:
-			return errors.New("processing too slow")
+			return nil, errors.New("processing too slow")
 		default:
-			return errors.New("canceled")
+			return nil, errors.New("canceled")
 		}
 	}
 }

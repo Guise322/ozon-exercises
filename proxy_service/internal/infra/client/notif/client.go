@@ -18,18 +18,18 @@ func NewNotifClient(c conf.NotifClientConf) *notifClient {
 	return &notifClient{client: http.Client{}, url: c.NotifClient.URL}
 }
 
-func (c *notifClient) Notify(cmd *contract.NotifCmd) (interface{}, error) {
+func (c *notifClient) Notify(cmd *contract.NotifCmd) error {
 	res, err := c.client.Post(c.url, "application/json", nil)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	defer res.Body.Close()
 	if res.StatusCode == http.StatusOK {
-		return nil, nil
+		return nil
 	}
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return nil, fmt.Errorf("the server returns: %v\n%v", res.Status, body)
+	return fmt.Errorf("the server returns: %v\n%v", res.Status, body)
 }

@@ -6,7 +6,6 @@ import (
 
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/interf"
-	"github.com/golang/protobuf/ptypes/empty"
 )
 
 type subCmdHandler struct {
@@ -31,9 +30,9 @@ func (h *subCmdHandler) Handle(cmd *contract.ProxySubCmd) (interface{}, error) {
 	case <-cmd.Ctx.Done():
 		switch cmd.Ctx.Err() {
 		case context.DeadlineExceeded:
-			return empty.Empty{}, errors.New("processing too slow")
+			return nil, errors.New("processing too slow")
 		default:
-			return empty.Empty{}, errors.New("canceled")
+			return nil, errors.New("canceled")
 		}
 	}
 }
