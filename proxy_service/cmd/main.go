@@ -5,8 +5,8 @@ import (
 
 	"github.com/Guise322/ozon-exercises/common"
 	"github.com/Guise322/ozon-exercises/common/mediator"
-	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/grpc_server"
-	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/http_server"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/server/grpc_server"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/api/server/http_server"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/cmd_handler/notif_cmd_handler"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/cmd_handler/sub_cmd_handler"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/cmd_handler/unread_cnt_handler"
