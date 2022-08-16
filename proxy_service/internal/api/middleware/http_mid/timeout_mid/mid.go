@@ -1,10 +1,18 @@
-package http_mid
+package timeout_mid
 
 import (
 	"context"
 	"net/http"
 	"time"
 )
+
+type HTTPTimeout struct {
+	value int64
+}
+
+func NewHTTPTimeout(timeout int64) *HTTPTimeout {
+	return &HTTPTimeout{value: timeout}
+}
 
 func (v *HTTPTimeout) SetReqTimeout(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

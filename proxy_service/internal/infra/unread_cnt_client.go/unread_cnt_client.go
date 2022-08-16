@@ -1,31 +1,32 @@
 package unread_cnt_client
 
 import (
-	"fmt"
-
 	pb "github.com/Guise322/ozon-exercises/common/email_service_pb/common/proto"
-	"github.com/Guise322/ozon-exercises/proxy_service/internal"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/conf"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra/grpc_conn"
 )
 
 type unreadCntClient struct {
 	emailServiceClient pb.EmailServiceClient
 }
 
-func NewUnreadCntClient(confPath string) (*unreadCntClient, error) {
-	var conf UnreadCntClientConf
-	err := internal.ReadConfig(&conf, confPath)
-	if err != nil {
-		return nil, err
-	}
-	conn, err := grpc.Dial(
-		fmt.Sprintf("%v:%v", conf.UnreadCntClient.Host, conf.UnreadCntClient.Port),
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-	)
+func NewUnreadCntClient(c conf.UnreadCntClientConf) (*unreadCntClient, error) {
+	conn, err := grpc_conn.CreatGRPCConn(c.UnreadCntClient.Host, c.UnreadCntClient.Port)
 	if err != nil {
 		return nil, err
 	}
 	grpcClient := pb.NewEmailServiceClient(conn)
 	return &unreadCntClient{emailServiceClient: grpcClient}, nil
+}
+
+func (c *unreadCntClient) GetUnreadEmailCnt(req *contract.UnreadCntReq) (*contract.UnreadCntResult, error) {
+	res, err := c.emailServiceClient.GetUnreadEmailCount(req.Ctx, &pb.UnreadCountRequest{
+		EmailLogin: req.Login,
+		EmailPass:  req.Pass,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &contract.UnreadCntResult{Count: res.MessageCount, Error: res.Error}, nil
 }

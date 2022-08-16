@@ -1,4 +1,4 @@
-package grpc_server
+package conf
 
 type GRPCConf struct {
 	Server struct {

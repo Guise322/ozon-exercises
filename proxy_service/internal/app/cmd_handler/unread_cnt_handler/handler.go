@@ -5,7 +5,16 @@ import (
 	"errors"
 
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/interf"
 )
+
+type unreadCntHandler struct {
+	cl interf.UnreadCntClient
+}
+
+func NewUnreadCntHandler(cl interf.UnreadCntClient) *unreadCntHandler {
+	return &unreadCntHandler{cl: cl}
+}
 
 func (h *unreadCntHandler) Handle(req *contract.UnreadCntReq) (*contract.UnreadCntResult, error) {
 	resCh := make(chan struct{})

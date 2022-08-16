@@ -5,8 +5,17 @@ import (
 	"errors"
 
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/interf"
 	"github.com/golang/protobuf/ptypes/empty"
 )
+
+type subCmdHandler struct {
+	subClient interf.SubClient
+}
+
+func NewSubCmdHandler(subClient interf.SubClient) *subCmdHandler {
+	return &subCmdHandler{subClient: subClient}
+}
 
 func (h *subCmdHandler) Handle(cmd *contract.ProxySubCmd) (interface{}, error) {
 	resCh := make(chan struct{})

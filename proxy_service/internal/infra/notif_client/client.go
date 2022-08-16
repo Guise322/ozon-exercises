@@ -6,10 +6,20 @@ import (
 	"net/http"
 
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/conf"
 )
 
+type notifClient struct {
+	client http.Client
+	url    string
+}
+
+func NewNotifClient(c conf.NotifClientConf) (*notifClient, error) {
+	return &notifClient{client: http.Client{}, url: c.NotifClient.URL}, nil
+}
+
 func (c *notifClient) Notify(cmd *contract.NotifCmd) (interface{}, error) {
-	res, err := c.client.Post(c.url, "text/json", nil)
+	res, err := c.client.Post(c.url, "application/json", nil)
 	if err != nil {
 		return nil, err
 	}

@@ -1,4 +1,4 @@
-package sub_client
+package conf
 
 type SubClientConf struct {
 	SubClient struct {

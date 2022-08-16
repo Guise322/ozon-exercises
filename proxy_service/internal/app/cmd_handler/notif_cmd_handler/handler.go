@@ -5,8 +5,17 @@ import (
 	"errors"
 
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/interf"
 	"github.com/golang/protobuf/ptypes/empty"
 )
+
+type notifCmdHandler struct {
+	cl interf.NotifClient
+}
+
+func NewNotifCmdHandler(cl interf.NotifClient) *notifCmdHandler {
+	return &notifCmdHandler{cl: cl}
+}
 
 func (h *notifCmdHandler) Handle(cmd *contract.NotifCmd) (empty.Empty, error) {
 	resCh := make(chan struct{})

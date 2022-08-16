@@ -1,4 +1,4 @@
-package unread_cnt_client
+package conf
 
 type UnreadCntClientConf struct {
 	UnreadCntClient struct {

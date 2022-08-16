@@ -11,11 +11,11 @@ type timeoutInterceptor struct {
 	timeout int64
 }
 
-func newTimeoutInterc(timeout int64) *timeoutInterceptor {
+func NewTimeoutInterc(timeout int64) *timeoutInterceptor {
 	return &timeoutInterceptor{timeout: timeout}
 }
 
-func (t timeoutInterceptor) setTimeout(
+func (t timeoutInterceptor) SetTimeout(
 	ctx context.Context,
 	req interface{},
 	info *grpc.UnaryServerInfo,

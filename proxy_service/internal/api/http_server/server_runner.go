@@ -5,21 +5,12 @@ import (
 	"net/http"
 
 	"github.com/Guise322/ozon-exercises/common/mediator"
-	"github.com/Guise322/ozon-exercises/proxy_service/internal"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/conf"
 )
 
-func RunHTTPSrv(confPath string, med mediator.Mediator) error {
-	var conf HTTPConf
-	err := internal.ReadConfig(&conf, confPath)
-	if err != nil {
-		return err
-	}
+func RunHTTPSrv(c conf.HTTPConf, med mediator.Mediator) error {
 	httpServ := newHTTPServer(med)
-	address := fmt.Sprintf("%v:%v", conf.Server.Host, conf.Server.Port)
-	httpServ.UseRoutes(conf.Server.Timeout)
-	err = http.ListenAndServe(address, nil)
-	if err != nil {
-		return err
-	}
-	return nil
+	address := fmt.Sprintf("%v:%v", c.Server.Host, c.Server.Port)
+	httpServ.UseRoutes(c.Server.Timeout)
+	return http.ListenAndServe(address, nil)
 }

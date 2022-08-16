@@ -6,7 +6,6 @@ import (
 
 	pb "github.com/Guise322/ozon-exercises/common/email_service_pb/common/proto"
 	"github.com/Guise322/ozon-exercises/common/mediator"
-	"github.com/Guise322/ozon-exercises/email_service/internal/api/middleware"
 	"github.com/Guise322/ozon-exercises/email_service/internal/conf"
 	"google.golang.org/grpc"
 )
@@ -19,7 +18,7 @@ func RunGRPCSrv(c conf.ServConf, med mediator.Mediator) error {
 	}
 	defer lis.Close()
 	var opts []grpc.ServerOption
-	middleware.UseInterceptors(&opts, c.Server.TimeoutInMilSec)
+	useInterceptors(&opts, c.Server.TimeoutInMilSec)
 	grpcServer := grpc.NewServer(opts...)
 	pb.RegisterEmailServiceServer(grpcServer, newGRPCServer(med))
 	if err := grpcServer.Serve(lis); err != nil {

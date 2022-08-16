@@ -1,4 +1,4 @@
-package http_server
+package conf
 
 type HTTPConf struct {
 	Server struct {
