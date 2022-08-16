@@ -1,4 +1,4 @@
-package notif_client
+package notif
 
 import (
 	"fmt"
@@ -14,8 +14,8 @@ type notifClient struct {
 	url    string
 }
 
-func NewNotifClient(c conf.NotifClientConf) (*notifClient, error) {
-	return &notifClient{client: http.Client{}, url: c.NotifClient.URL}, nil
+func NewNotifClient(c conf.NotifClientConf) *notifClient {
+	return &notifClient{client: http.Client{}, url: c.NotifClient.URL}
 }
 
 func (c *notifClient) Notify(cmd *contract.NotifCmd) (interface{}, error) {

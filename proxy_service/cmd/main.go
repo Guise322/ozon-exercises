@@ -12,9 +12,9 @@ import (
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/cmd_handler/unread_cnt_handler"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/conf"
-	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra/notif_client"
-	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra/sub_client"
-	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra/unread_cnt_client.go"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra/client/notif"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra/client/sub"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra/client/unread_cnt.go"
 )
 
 const (
@@ -42,10 +42,7 @@ func runGRPCServer() error {
 	if err != nil {
 		return err
 	}
-	notifCl, err := notif_client.NewNotifClient(notifConf)
-	if err != nil {
-		return err
-	}
+	notifCl := notif.NewNotifClient(notifConf)
 	grpcMed := mediator.NewMediator()
 	grpcMed.RegHandler(&contract.NotifCmd{}, notif_cmd_handler.NewNotifCmdHandler(notifCl))
 	var grpcConf conf.GRPCConf
@@ -68,11 +65,11 @@ func runHTTPServer() error {
 	if err != nil {
 		return err
 	}
-	subCl, err := sub_client.NewSubClient(subConf)
+	subCl, err := sub.NewSubClient(subConf)
 	if err != nil {
 		return err
 	}
-	unreadCl, err := unread_cnt_client.NewUnreadCntClient(unreadConf)
+	unreadCl, err := unread_cnt.NewUnreadCntClient(unreadConf)
 	if err != nil {
 		return err
 	}

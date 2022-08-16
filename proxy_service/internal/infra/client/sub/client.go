@@ -1,4 +1,4 @@
-package sub_client
+package sub
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	pb "github.com/Guise322/ozon-exercises/common/email_service_pb/common/proto"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/app/contract"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/conf"
-	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra/grpc_conn"
+	"github.com/Guise322/ozon-exercises/proxy_service/internal/infra/client/grpc_conn"
 )
 
 type subClient struct {
