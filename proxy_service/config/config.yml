@@ -9,11 +9,8 @@ httpServer:
 subClient:
   host: "localhost"
   port: 5001
-  timeoutInMilSec: 400
 unreadCntClient:
   host: "localhost"
   port: 5001
-  timeoutInMilSec: 400
 notifClient:
   url: "http//:boturl.com/"
-  timeoutInMilSec: 400
