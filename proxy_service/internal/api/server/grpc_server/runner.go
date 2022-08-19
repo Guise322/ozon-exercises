@@ -5,12 +5,11 @@ import (
 	"net"
 
 	pb "github.com/Guise322/ozon-exercises/common/email_service_pb/common/proto"
-	"github.com/Guise322/ozon-exercises/common/mediator"
 	"github.com/Guise322/ozon-exercises/proxy_service/internal/conf"
 	"google.golang.org/grpc"
 )
 
-func RunGRPCSrv(c conf.GRPCConf, med mediator.Mediator) error {
+func (s *server) RunGRPCSrv(c conf.GRPCConf) error {
 
 	address := fmt.Sprintf("%v:%v", c.Server.Host, c.Server.Port)
 	lis, err := net.Listen("tcp", address)
@@ -21,6 +20,6 @@ func RunGRPCSrv(c conf.GRPCConf, med mediator.Mediator) error {
 	var opts []grpc.ServerOption
 	useInterceptors(&opts, c.Server.Timeout)
 	grpcServer := grpc.NewServer(opts...)
-	pb.RegisterNewEmailNotifServer(grpcServer, newGRPCServer(med))
+	pb.RegisterNewEmailNotifServer(grpcServer, s)
 	return grpcServer.Serve(lis)
 }

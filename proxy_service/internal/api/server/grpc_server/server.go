@@ -17,18 +17,18 @@ type server struct {
 	mediator mediator.Mediator
 }
 
-func newGRPCServer(med mediator.Mediator) *server {
+func NewGRPCServer(med mediator.Mediator) *server {
 	return &server{mediator: med}
 }
 
-func (s server) Notify(ctx context.Context, in *pb.NewEmailCmd) (*empty.Empty, error) {
+func (s *server) Notify(ctx context.Context, in *pb.NewEmailCmd) (*empty.Empty, error) {
 	_, err := s.mediator.Handle(ctx, &contract.NotifCmd{
 		Id:      in.Id,
 		From:    in.From,
 		Message: in.Message,
 	})
 	if err != nil {
-		return nil, status.Error(codes.Internal, fmt.Sprintf("%v (proxy_service)", err.Error()))
+		return nil, status.Error(codes.Internal, fmt.Sprintf("proxy_service: %v", err.Error()))
 	}
 	return &empty.Empty{}, nil
 }

@@ -12,7 +12,7 @@ type httpServer struct {
 	mediator mediator.Mediator
 }
 
-func newHTTPServer(med mediator.Mediator) *httpServer {
+func NewHTTPServer(med mediator.Mediator) *httpServer {
 	return &httpServer{mediator: med}
 }
 

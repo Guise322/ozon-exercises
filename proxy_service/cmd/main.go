@@ -50,7 +50,7 @@ func runGRPCServer() error {
 	if err != nil {
 		return err
 	}
-	return grpc_server.RunGRPCSrv(grpcConf, grpcMed)
+	return grpc_server.NewGRPCServer(grpcMed).RunGRPCSrv(grpcConf)
 }
 
 func runHTTPServer() error {
@@ -81,5 +81,5 @@ func runHTTPServer() error {
 	if err != nil {
 		return err
 	}
-	return http_server.RunHTTPSrv(httpConf, httpMed)
+	return http_server.NewHTTPServer(httpMed).RunHTTPSrv(httpConf)
 }

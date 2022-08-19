@@ -41,7 +41,7 @@ func runServer() error {
 	if err != nil {
 		return err
 	}
-	return server.RunGRPCSrv(servConf, med)
+	return server.NewGRPCServer(med).RunGRPCSrv(servConf)
 }
 
 func getPath() string {

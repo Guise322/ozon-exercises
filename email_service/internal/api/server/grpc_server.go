@@ -17,7 +17,7 @@ type server struct {
 	mediator mediator.Mediator
 }
 
-func newGRPCServer(med mediator.Mediator) *server {
+func NewGRPCServer(med mediator.Mediator) *server {
 	return &server{mediator: med}
 }
 
