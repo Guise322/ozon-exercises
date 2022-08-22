@@ -10,8 +10,8 @@ import (
 	"github.com/Guise322/ozon-exercises/email_service/internal/app/handler/subscr"
 	"github.com/Guise322/ozon-exercises/email_service/internal/app/handler/unread_cnt"
 	"github.com/Guise322/ozon-exercises/email_service/internal/conf"
-	"github.com/Guise322/ozon-exercises/email_service/internal/infra/sub_client"
-	"github.com/Guise322/ozon-exercises/email_service/internal/infra/unread_cnt_client"
+	"github.com/Guise322/ozon-exercises/email_service/internal/infra/client/grpc/sub_client"
+	"github.com/Guise322/ozon-exercises/email_service/internal/infra/client/grpc/unread_cnt_client"
 )
 
 const (

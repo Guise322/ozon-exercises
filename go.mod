@@ -2,7 +2,18 @@ module github.com/Guise322/ozon-exercises
 
 go 1.18
 
-require gopkg.in/yaml.v2 v2.4.0
+require (
+	github.com/emersion/go-imap v1.2.1
+	github.com/emersion/go-sasl v0.0.0-20200509203442-7bfe0ed36a21
+	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
+	gopkg.in/yaml.v2 v2.4.0
+)
+
+require (
+	cloud.google.com/go v0.34.0 // indirect
+	github.com/google/go-cmp v0.5.8 // indirect
+	google.golang.org/appengine v1.4.0 // indirect
+)
 
 require (
 	github.com/golang/protobuf v1.5.2

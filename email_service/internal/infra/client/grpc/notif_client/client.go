@@ -6,7 +6,7 @@ import (
 	pb "github.com/Guise322/ozon-exercises/common/email_service_pb/common/proto"
 	"github.com/Guise322/ozon-exercises/email_service/internal/app/contract"
 	"github.com/Guise322/ozon-exercises/email_service/internal/conf"
-	"github.com/Guise322/ozon-exercises/email_service/internal/infra/grpc_conn"
+	"github.com/Guise322/ozon-exercises/email_service/internal/infra/client/grpc/grpc_conn"
 )
 
 type notifClient struct {
