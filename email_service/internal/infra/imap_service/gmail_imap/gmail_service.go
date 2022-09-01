@@ -1,4 +1,4 @@
-package imap_service
+package gmail_imap
 
 import (
 	"context"
@@ -23,7 +23,7 @@ const (
 	scope        = "https://mail.google.com/"
 )
 
-const path = "."
+// const path = "."
 const file = "token.json"
 
 func NewIMAPService() *gmailService {
@@ -51,6 +51,9 @@ func (s *gmailService) authenticate(cfg oauth2.Config, email string) error {
 	token, err := tokenFromFile(file)
 	if err != nil {
 		token, err = tokenFromWeb(cfg)
+		if err != nil {
+			return err
+		}
 	}
 	// Login to the IMAP server with XOAUTH2
 	saslClient := sasl.NewOAuthBearerClient(&sasl.OAuthBearerOptions{

@@ -1,4 +1,4 @@
-package imap_service
+package ya_imap
 
 import (
 	"errors"
@@ -9,44 +9,7 @@ import (
 	"github.com/emersion/go-imap/client"
 )
 
-type yaService struct {
-	client    *client.Client
-	localDone chan struct{}
-	mesCh     chan<- *imap.Message
-}
-
-func NewYaService(mesCh chan<- *imap.Message) *yaService {
-	return &yaService{mesCh: mesCh}
-}
-
-func (s *yaService) Connect(imapAddr, email, password string) error {
-	var err error
-	s.client, err = client.DialTLS(imapAddr, nil)
-	if err != nil {
-		return err
-	}
-	return s.client.Login(email, password)
-}
-
-func (s *yaService) Disconnect() error {
-	return s.client.Logout()
-}
-
-func (s *yaService) GetUnreadMessageCount() (int, error) {
-	_, err := s.client.Select("INBOX", true)
-	if err != nil {
-		return 0, err
-	}
-	criteria := imap.NewSearchCriteria()
-	criteria.WithoutFlags = []string{"\\Seen"}
-	uids, err := s.client.Search(criteria)
-	if err != nil {
-		return 0, err
-	}
-	return len(uids), nil
-}
-
-func (s *yaService) SubsribeToInbox(unsubCh chan<- struct{}) error {
+func (s *yaService) SubToInbox(mesCh chan<- *imap.Message) error {
 	if s.localDone != nil {
 		return errors.New("the client already subscribed")
 	}
@@ -59,7 +22,7 @@ func (s *yaService) SubsribeToInbox(unsubCh chan<- struct{}) error {
 		defer func() {
 			s.client.Unselect()
 			idleTimer.Stop()
-			unsubCh <- struct{}{}
+			s.unsubCh <- struct{}{}
 		}()
 		idleWait := make(chan struct{}, 1)
 		firstResp := false
@@ -76,7 +39,7 @@ func (s *yaService) SubsribeToInbox(unsubCh chan<- struct{}) error {
 					close(idleDone)
 					<-idleWait
 					if !firstResp {
-						s.mesCh <- <-s.getMessages(mbox)
+						mesCh <- <-s.getMessages(mbox)
 						firstResp = true
 					} else {
 						firstResp = false
@@ -109,11 +72,11 @@ func (s *yaService) getMessages(mbox *client.MailboxUpdate) <-chan *imap.Message
 	return messages
 }
 
-func (s *yaService) UnsubscribeInbox(unsubCh <-chan struct{}) error {
+func (s *yaService) UnsubFromInbox() error {
 	if s.localDone == nil {
 		return errors.New("the client is not subscribed")
 	}
 	s.localDone <- struct{}{}
-	<-unsubCh
+	<-s.unsubCh
 	return nil
 }
